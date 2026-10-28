@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thijs Verhoeven</title>
+    <link rel="stylesheet" href="main.css">
+    <link href="https://unpkg.com/nes.css@latest/css/nes.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="flag-hiker.css">
+</head>
+<body>
+    <!-- LOADER -->
+    <div class="loader_wrapper">
+        <div id="loading-animation">
+            <p style="display:none;">A</p>
+            <p style="display:none;">B</p>
+            <p style="display:none;">C</p>
+            <p style="display:none;">D</p>
+            <p style="display:none;">E</p>
+            <p style="display:none;">F</p>
+            <p style="display:none;">G</p>
+            <p style="display:none;">H</p>
+            <p style="display:none;">I</p>
+            <p style="display:none;">J</p>
+        </div>
+        <div class="stripe"></div>
+        <div class="stripe"></div>
+        <div class="stripe"></div>
+        <div class="stripe"></div>
+    </div>
+
+    <!-- HEADER -->
+    <header>
+        <div class="logo">Logo</div>
+        <nav>
+            <ul>
+                <li><a href="#projects" data-i18n="nav.projects">Projects</a></li>
+                <li><a href="#about" data-i18n="nav.about">About Me</a></li>
+                <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- HERO -->
+    <div class="container">
+        <div id="grained-background"></div>
+        <div class="content">
+            <h2 class="base">THIJS VERHOEVEN</h2>
+
+            <svg class="wave-mask" viewBox="0 0 1600 500" preserveAspectRatio="none">
+                <defs>
+                    <mask id="waveMask">
+                        <rect width="100%" height="100%" fill="black"/>
+                        <path id="wavePath" fill="white"></path>
+                    </mask>
+                </defs>
+            </svg>
+
+            <h2 class="wave wave1">THIJS VERHOEVEN</h2>
+            <h2 class="wave wave2">THIJS VERHOEVEN</h2>
+        </div>
+    </div>
+
+    <!-- INTRO -->
+    <div class="next-section">
+        <div class="intro_text--container">
+            <section>
+                <p class="reveal-type">
+                    <span data-i18n="intro.paragraph1.before">I'm an IT &amp; Business graduate who loves</span>
+                    <span class="retro-font" data-i18n="intro.paragraph1.highlight">solving problems</span>
+                    <span data-i18n="intro.paragraph1.after">with technology.</span>
+                </p>
+
+                <p class="reveal-type" data-i18n="intro.paragraph2">
+                    I'm always curious about how things work. Then I usually can't help myself from trying to make them better.
+                </p>
+
+                <p class="reveal-type">
+                    <span data-i18n="intro.paragraph3.before">I'm currently</span>
+                    <span class="retro-font" data-i18n="intro.paragraph3.highlight">open to new opportunities</span>
+                    <span data-i18n="intro.paragraph3.after">where I can build, learn, and make an impact with technology.</span>
+                </p>
+            </section>
+
+            <section>
+                <a href="#about" class="nes-btn" role="link" data-i18n="intro.moreAbout">
+                    More about me :)
+                </a>
+            </section>
+        </div>
+    </div>
+
+    <!-- PROJECT CAROUSEL -->
+    <div class="scroll-carousel" id="projects">
+        <section class="scroll-carousel__container">
+            <div class="scroll-carousel__sticky">
+                <div class="scroll-carousel__cards">
+                    <!-- Project cards are generated dynamically in main.js -->
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- PROJECT DETAIL OVERLAY -->
+    <div class="project-overlay" id="projectOverlay">
+        <div class="project-overlay__background"></div>
+
+        <div class="project-detail">
+            <button
+                class="project-detail__close"
+                id="closeProject"
+                aria-label="Close project"
+                data-i18n-attr="aria-label:project.close"
+            >×</button>
+
+            <div class="project-detail__top">
+                <span class="project-detail__label" data-i18n="project.database">
+                    PROJECT DATABASE
+                </span>
+            </div>
+
+            <div class="project-detail__main">
+                <div class="project-detail__visual">
+                    <div class="project-detail__image">
+                        <img id="detailImage" src="" alt="">
+
+                        <div class="detail-scanlines"></div>
+
+                        <div class="detail-image-label" id="detailImageLabel"></div>
+
+                        <button
+                            class="project-gallery-arrow project-gallery-arrow--prev"
+                            id="galleryPrev"
+                            aria-label="Previous image"
+                            data-i18n-attr="aria-label:project.previousImage"
+                        >←</button>
+
+                        <button
+                            class="project-gallery-arrow project-gallery-arrow--next"
+                            id="galleryNext"
+                            aria-label="Next image"
+                            data-i18n-attr="aria-label:project.nextImage"
+                        >→</button>
+                    </div>
+                </div>
+
+                <div class="project-detail__info">
+                    <div class="project-detail__status" id="detailStatus"></div>
+                    <h2 id="detailTitle"></h2>
+
+                    <div class="project-detail__meta">
+                        <span id="detailType"></span>
+                        <span id="detailYear"></span>
+                    </div>
+
+                    <div class="project-description">
+                        <p id="detailDescription"></p>
+                    </div>
+
+                    <div class="project-tech">
+                        <span class="project-tech__label" data-i18n="project.equipment">
+                            EQUIPMENT
+                        </span>
+                        <div class="project-tech__list" id="detailTechnologies"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<section class="skills" id="skills">
+
+
+    <div class="skills__screen">
+
+        <!-- LEFT: character/profile -->
+        <div class="skills__profile">
+
+            <div class="pixel-avatar">
+                <div class="pixel-avatar__placeholder">
+                    CHARACTER
+                </div>
+            </div>
+
+            <h3>THIJS</h3>
+
+            <p class="skills__class">
+                IT & BUSINESS ENGINEER
+            </p>
+
+            <div class="skills__stats">
+
+                <div class="stat">
+                    <span>PROBLEM SOLVING</span>
+                    <div class="stat__bar">
+                        <div style="width: 90%"></div>
+                    </div>
+                </div>
+
+                <div class="stat">
+                    <span>CURIOSITY</span>
+                    <div class="stat__bar">
+                        <div style="width: 95%"></div>
+                    </div>
+                </div>
+
+                <div class="stat">
+                    <span>CREATIVITY</span>
+                    <div class="stat__bar">
+                        <div style="width: 85%"></div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- RIGHT: tabs/content -->
+        <div class="skills__content">
+
+            <div class="skills__tabs">
+
+                <button class="skill-tab active" data-tab="technical">
+                    TECH
+                </button>
+
+                <button class="skill-tab" data-tab="business">
+                    BUSINESS
+                </button>
+
+                <button class="skill-tab" data-tab="creative">
+                    CREATIVE
+                </button>
+
+                <button class="skill-tab" data-tab="personality">
+                    PERSONALITY
+                </button>
+
+            </div>
+
+
+            <div class="skill-panel active" id="technical">
+
+                <h3>TECHNICAL SKILLS</h3>
+
+                <div class="skill-list">
+
+                    <div class="skill-item">
+                        <span>Power Platform</span>
+                        <span>★★★★★</span>
+                    </div>
+
+                    <div class="skill-item">
+                        <span>Power Automate</span>
+                        <span>★★★★★</span>
+                    </div>
+
+                    <div class="skill-item">
+                        <span>Power Apps</span>
+                        <span>★★★★☆</span>
+                    </div>
+
+                    <div class="skill-item">
+                        <span>JavaScript</span>
+                        <span>★★★★☆</span>
+                    </div>
+
+                    <div class="skill-item">
+                        <span>HTML / CSS</span>
+                        <span>★★★★★</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="skill-panel" id="business">
+
+                <div class="panel-header">
+                    <span class="panel-label">QUEST DATABASE</span>
+                    <h3>BUSINESS MISSIONS</h3>
+                </div>
+
+                <div class="quest-window">
+
+                    <!-- Window header -->
+                    <div class="quest-window__header">
+
+                        <span>ACTIVE QUESTS</span>
+
+                        <span class="quest-count">
+                            04 / 08
+                        </span>
+
+                    </div>
+
+
+                    <!-- Scrollable quest area -->
+                    <div class="quest-list">
+
+
+                        <!-- QUEST 01 -->
+                        <div class="quest">
+
+                            <div class="quest__icon">
+                                01
+                            </div>
+
+                            <div class="quest__content">
+
+                                <span class="quest__status">
+                                    COMPLETED
+                                </span>
+
+                                <h4>
+                                    UNDERSTAND THE PROBLEM
+                                </h4>
+
+                                <p>
+                                    Breaking down complex business problems
+                                    and figuring out what actually needs to be solved.
+                                </p>
+
+                            </div>
+
+                            <div class="quest__xp">
+                                +250 XP
+                            </div>
+
+                        </div>
+
+
+                        <!-- QUEST 02 -->
+                        <div class="quest">
+
+                            <div class="quest__icon">
+                                02
+                            </div>
+
+                            <div class="quest__content">
+
+                                <span class="quest__status">
+                                    COMPLETED
+                                </span>
+
+                                <h4>
+                                    IMPROVE THE PROCESS
+                                </h4>
+
+                                <p>
+                                    Finding inefficient processes and turning
+                                    them into something simpler and smarter.
+                                </p>
+
+                            </div>
+
+                            <div class="quest__xp">
+                                +400 XP
+                            </div>
+
+                        </div>
+
+
+                        <!-- QUEST 03 -->
+                        <div class="quest">
+
+                            <div class="quest__icon">
+                                03
+                            </div>
+
+                            <div class="quest__content">
+
+                                <span class="quest__status active">
+                                    ONGOING
+                                </span>
+
+                                <h4>
+                                    BRIDGE BUSINESS &amp; IT
+                                </h4>
+
+                                <p>
+                                    Translating between people, processes
+                                    and technology.
+                                </p>
+
+                            </div>
+
+                            <div class="quest__xp">
+                                +500 XP
+                            </div>
+
+                        </div>
+
+
+                        <!-- QUEST 04 -->
+                        <div class="quest">
+
+                            <div class="quest__icon">
+                                04
+                            </div>
+
+                            <div class="quest__content">
+
+                                <span class="quest__status">
+                                    COMPLETED
+                                </span>
+
+                                <h4>
+                                    AUTOMATE THE BORING STUFF
+                                </h4>
+
+                                <p>
+                                    Finding repetitive work and figuring out
+                                    how technology can take care of it.
+                                </p>
+
+                            </div>
+
+                            <div class="quest__xp">
+                                +350 XP
+                            </div>
+
+                        </div>
+
+
+                        <!-- QUEST 05 -->
+                        <div class="quest">
+
+                            <div class="quest__icon">
+                                05
+                            </div>
+
+                            <div class="quest__content">
+
+                                <span class="quest__status">
+                                    COMPLETED
+                                </span>
+
+                                <h4>
+                                    TURN IDEAS INTO SOLUTIONS
+                                </h4>
+
+                                <p>
+                                    Taking an idea from a conversation and
+                                    turning it into something people can use.
+                                </p>
+
+                            </div>
+
+                            <div class="quest__xp">
+                                +450 XP
+                            </div>
+
+                        </div>
+
+
+                        <!-- QUEST 06 -->
+                        <div class="quest">
+
+                            <div class="quest__icon">
+                                06
+                            </div>
+
+                            <div class="quest__content">
+
+                                <span class="quest__status active">
+                                    ONGOING
+                                </span>
+
+                                <h4>
+                                    LEARN SOMETHING NEW
+                                </h4>
+
+                                <p>
+                                    Constantly expanding the toolbox and
+                                    finding better ways of doing things.
+                                </p>
+
+                            </div>
+
+                            <div class="quest__xp">
+                                +300 XP
+                            </div>
+
+                        </div>
+
+
+                        <!-- QUEST 07 -->
+                        <div class="quest">
+
+                            <div class="quest__icon">
+                                07
+                            </div>
+
+                            <div class="quest__content">
+
+                                <span class="quest__status">
+                                    COMPLETED
+                                </span>
+
+                                <h4>
+                                    MAKE COMPLEX THINGS SIMPLE
+                                </h4>
+
+                                <p>
+                                    Turning complicated technical concepts
+                                    into something understandable.
+                                </p>
+
+                            </div>
+
+                            <div class="quest__xp">
+                                +500 XP
+                            </div>
+
+                        </div>
+
+
+                        <!-- QUEST 08 -->
+                        <div class="quest">
+
+                            <div class="quest__icon">
+                                08
+                            </div>
+
+                            <div class="quest__content">
+
+                                <span class="quest__status active">
+                                    ONGOING
+                                </span>
+
+                                <h4>
+                                    BUILD SOMETHING COOL
+                                </h4>
+
+                                <p>
+                                    Sometimes the best way to learn is simply
+                                    to start building and see where it goes.
+                                </p>
+
+                            </div>
+
+                            <div class="quest__xp">
+                                +750 XP
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="skill-panel" id="creative">
+
+                <div class="panel-header">
+                    <span class="panel-label">INVENTORY</span>
+                    <h3>CREATIVE TOOLKIT</h3>
+                </div>
+
+                <div class="inventory">
+
+                    <div class="inventory-item featured">
+                        <div class="inventory-icon">UI</div>
+
+                        <div>
+                            <h4>UI / UX</h4>
+                            <p>Turning ideas into interfaces people actually enjoy using.</p>
+                        </div>
+
+                        <span class="item-level">LV. 05</span>
+                    </div>
+
+
+                    <div class="inventory-item">
+                        <div class="inventory-icon">WEB</div>
+
+                        <div>
+                            <h4>WEB DESIGN</h4>
+                            <p>Designing websites with personality instead of templates.</p>
+                        </div>
+
+                        <span class="item-level">LV. 05</span>
+                    </div>
+
+
+                    <div class="inventory-item">
+                        <div class="inventory-icon">IDEA</div>
+
+                        <div>
+                            <h4>CREATIVE PROBLEM SOLVING</h4>
+                            <p>Trying the weird idea when the obvious one isn't enough.</p>
+                        </div>
+
+                        <span class="item-level">LV. 05</span>
+                    </div>
+
+
+                    <div class="inventory-item">
+                        <div class="inventory-icon">+</div>
+
+                        <div>
+                            <h4>EXPERIMENTATION</h4>
+                            <p>Building things just to see what happens.</p>
+                        </div>
+
+                        <span class="item-level">LV. 04</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="skill-panel" id="personality">
+
+                <div class="personality-screen">
+
+                    <div class="personality-title">
+                        <span>CHARACTER PROFILE</span>
+                        <h3>PASSIVE ABILITIES</h3>
+                    </div>
+
+
+                    <div class="ability-grid">
+
+                        <div class="ability">
+                            <span class="ability__tag">PASSIVE</span>
+                            <h4>CURIOUS</h4>
+                            <p>
+                                Will probably ask why something works
+                                before accepting that it does.
+                            </p>
+                            <strong>+10 EXPLORATION</strong>
+                        </div>
+
+
+                        <div class="ability">
+                            <span class="ability__tag">PASSIVE</span>
+                            <h4>CAN'T LEAVE IT ALONE</h4>
+                            <p>
+                                Sees something that could be improved.
+                                Immediately starts thinking about it.
+                            </p>
+                            <strong>+20 OPTIMIZATION</strong>
+                        </div>
+
+
+                        <div class="ability">
+                            <span class="ability__tag">PASSIVE</span>
+                            <h4>TRIES WEIRD IDEAS</h4>
+                            <p>
+                                Sometimes the strange solution
+                                turns out to be the best one.
+                            </p>
+                            <strong>+15 CREATIVITY</strong>
+                        </div>
+
+
+                        <div class="ability">
+                            <span class="ability__tag rare">RARE</span>
+                            <h4>GOOD ENERGY</h4>
+                            <p>
+                                Likes working with people who are
+                                excited about what they're building.
+                            </p>
+                            <strong>+25 TEAMWORK</strong>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</section>
+    
+    
+
+
+    <div class="fh-widget fh-hidden" id="fhWidget" aria-label="Animated hiker">
+        <div class="fh-scene" id="fhScene">
+            <img class="fh-full" src="animations/mountain.svg" alt="">
+            <img class="fh-flag" id="fh-NL" src="animations/flag-nl.svg" alt="">
+            <img class="fh-flag" id="fh-GB" src="animations/flag-gb.svg" alt="">
+
+            <div id="fhHiker">
+                <div id="fhHk">
+                    <img data-pose="rest" src="animations/character-rest.svg" alt="">
+                    <img data-pose="grab" src="animations/character-grab.svg" alt="">
+                    <img data-pose="walk-a" src="animations/character-walk-a.svg" alt="">
+                    <img data-pose="walk-b" src="animations/character-walk-b.svg" alt="">
+                    <img data-pose="reach" src="animations/character-reach.svg" alt="">
+                    <img data-pose="reach-f" src="animations/character-reach-f.svg" alt="">
+                    <img data-pose="hold" src="animations/character-hold.svg" alt="">
+                    <img data-pose="plant" src="animations/character-plant.svg" alt="">
+                    <img data-pose="release" src="animations/character-release.svg" alt="">
+                    <img data-pose="pass" src="animations/character-pass.svg" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/split-type"></script>
+    <script src="https://unpkg.com/lenis@1.1.16/dist/lenis.min.js"></script>
+    <script src="grained.js"></script>
+    <script src="translations.js"></script>
+    <script src="main.js"></script>
+    <script src="flag-hiker.js"></script>
+</body>
+</html>
