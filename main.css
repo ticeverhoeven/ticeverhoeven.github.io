@@ -1,0 +1,2544 @@
+@font-face {
+    font-family: 'ftbold';
+    src: url("fonts/Futura Bold font.ttf");
+}
+@font-face {
+    font-family: 'ftlight';
+    src: url("fonts/futura\ light\ bt.ttf");
+}
+
+@font-face {
+    font-family: 'retro';
+    src: url("fonts/SuperLegendBoy-4w8Y.ttf")
+}
+
+@font-face {
+    font-family: 'nowduke';
+    src: url("fonts/Nowduke-Regular.ttf")
+}
+
+@font-face {
+    font-family: 'carnero';
+    src: url("fonts/Carnero\ W05\ Black.ttf")
+}
+
+@font-face {
+    font-family: 'troutbeck';
+    src: url("fonts/Troutbeck\ DEMO.otf")
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    flex-direction: column; /* Stack sections vertically */
+    justify-content: flex-start;
+    align-items: stretch;
+    min-height: 100vh;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 999;
+
+    background:
+        repeating-linear-gradient(
+            to bottom,
+            rgba(255,255,255,0.03),
+            rgba(255,255,255,0.03) 1px,
+            transparent 2px,
+            transparent 4px
+        );
+
+    mix-blend-mode: overlay;
+    opacity: 0.25;
+}
+
+body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 998;
+
+    background: radial-gradient(
+        circle at center,
+        transparent 0%,
+        rgba(0,0,0,0.4) 100%
+    );
+}
+
+
+
+header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    display: flex !important;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    z-index: 9; /* Zorg dat header boven de andere secties blijft */
+}
+
+.logo {
+    color: white;
+    font-size: 3em;
+    margin-left: 30px;
+    margin-top: 30px;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 70px;
+    margin-top: 30px;
+    margin-right: 30px;
+}
+
+nav ul li {
+    position: relative;
+}
+
+nav ul li a {
+    position: relative;
+
+    color: #FF131E;
+    text-decoration: none !important;
+
+    font-size: 1.5em;
+    font-family: 'retro';
+
+    padding: 10px 20px;
+
+    display: block;
+
+    transition: color 0.2s ease;
+}
+
+
+/* Hover text */
+nav ul li a:hover {
+    color: #8F1018;
+    text-decoration: none !important;
+}
+
+
+/* 8-bit underline */
+nav ul li a::after {
+    content: "";
+
+    position: absolute;
+
+    left: 20px;
+    bottom: 2px;
+
+    width: calc(100% - 40px);
+    height: 6px;
+
+    background: currentColor;
+
+    transform: scaleX(0);
+    transform-origin: left;
+
+    transition:
+        transform 0.25s steps(6, end);
+}
+
+
+/* Show underline */
+nav ul li a:hover::after {
+    transform: scaleX(1);
+}
+
+.loader_wrapper {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+}
+
+.loader_wrapper.loaded .stripe {
+    transform: translateY(-100%);
+}
+
+.loader_wrapper .stripe {
+    position: fixed;
+    background-color: #ADAC54;
+    height: 100%;
+    width: 25%;
+    top: 0;
+    z-index: 1;
+    transition: .35s transform cubic-bezier(.455, .03, .515, .955);
+    transition-delay: 0s;
+    transform: translateY(0%);
+}
+
+.loader_wrapper .stripe:nth-child(2) {
+    left: 0;
+    transition-delay: .3s;
+}
+
+.loader_wrapper .stripe:nth-child(3) {
+    left: 25%;
+    transition-delay: .4s;
+}
+
+.loader_wrapper .stripe:nth-child(4) {
+    left: 50%;
+    transition-delay: .5s;
+}
+
+.loader_wrapper .stripe:nth-child(5) {
+    left: 75%;
+    transition-delay: .6s;
+}
+
+.retro-font,
+.retro-font .word {
+    font-family: 'retro', monospace !important;
+    font-size: 35px;
+}
+
+.content {
+    position: relative;
+}
+
+.content h2 {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) scaleY(2.5);
+    font-size: 17em;
+    font-family: 'troutbeck';
+    white-space: nowrap;
+}
+
+.content .base {
+    color: #F7EAF1FF;
+}
+
+.content .wave {
+    color: #d94f7d;
+
+    mask: url(#waveMask);
+    -webkit-mask: url(#waveMask);
+}
+
+.content .wave::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    background:
+        repeating-linear-gradient(
+            0deg,
+            rgba(255,255,255,0.06) 0px,
+            rgba(255,255,255,0.06) 1px,
+            transparent 1px,
+            transparent 3px
+        );
+
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+
+
+
+#loading-animation {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 11;
+}
+
+#loading-animation p {
+    font-size: 6rem;
+    color: white;
+}
+
+.loader_wrapper.loaded #loading-animation {
+    display: none;
+}
+
+.nes-btn {
+    font-family: 'retro';
+}
+
+
+
+
+/* Background layer with the grainy texture, placed behind other elements */
+#grained-background {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    z-index: 0 !important; /* Set to 0 to keep it behind other content */
+    pointer-events: none !important;
+}
+
+.container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #FFD400;
+}
+
+.container::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+
+    /* grid lines */
+    background-image:
+        linear-gradient(to right, rgba(255,255,255,0.35) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,0.35) 1px, transparent 1px);
+
+    background-size: 80px 80px;
+
+    /* soft retro feel */
+    opacity: 0.6;
+
+    /* optional “slight blur softness” */
+    filter: blur(0.2px);
+}
+
+.container::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+
+    /* soft vignette + corner rounding illusion */
+    background: radial-gradient(
+        circle at center,
+        transparent 60%,
+        rgba(0,0,0,0.15) 100%
+    );
+
+    border-radius: 18px;
+}
+
+.content {
+    position: relative;
+}
+
+.next-section {
+    width: 100%; /* Volledige breedte */
+    height: 105vh;
+    background-color: #213E60;
+    display: grid;
+    align-items: top; /* Centreert de inhoud verticaal */
+    justify-content: center; 
+    padding: 200px 300px 50px 100px; 
+}
+
+.intro_text--container p {
+    display: block; /* Ensure block-level display */
+    color: white;
+    font-family: 'ftlight';
+    font-size: 41px;
+    margin-bottom: 20px; /* Adds spacing between paragraphs */
+}
+
+/* Add space between lines in paragraphs */
+.reveal-type {
+    line-height: 1.6;  /* Adjust this value for more or less space between lines */
+}
+
+
+.reveal-type .word {
+    display: inline-block;
+    white-space: nowrap;
+}
+
+.reveal-type .char {
+    display: inline;
+}
+
+
+/* ============================================================
+PROJECT CARDS — RETRO GAME CARTRIDGES
+============================================================ */
+
+.scroll-carousel {
+    width: 100%;
+    background: #213E60;
+}
+
+.scroll-carousel__container {
+    position: relative;
+    width: 100%;
+    height: 300vh;
+    background: #4FD9AB;
+}
+
+.scroll-carousel__container::before {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    z-index: 0;
+
+    background:
+
+        /* Large pixel grid */
+        linear-gradient(
+            to right,
+            rgba(255,255,255,0.055) 2px,
+            transparent 2px
+        ),
+        linear-gradient(
+            to bottom,
+            rgba(255,255,255,0.055) 2px,
+            transparent 2px
+        ),
+
+        /* Smaller pixel grid */
+        linear-gradient(
+            to right,
+            rgba(0,0,0,0.07) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            to bottom,
+            rgba(0,0,0,0.07) 1px,
+            transparent 1px
+        );
+
+    background-size:
+        80px 80px,
+        80px 80px,
+        20px 20px,
+        20px 20px;
+
+    opacity: 0.7;
+}
+
+.scroll-carousel__container::after {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    z-index: 1;
+
+    background:
+
+        /* horizontal CRT lines */
+        repeating-linear-gradient(
+            to bottom,
+            rgba(255,255,255,0.035) 0px,
+            rgba(255,255,255,0.035) 1px,
+            transparent 1px,
+            transparent 5px
+        ),
+
+        /* subtle vignette */
+        radial-gradient(
+            ellipse at center,
+            transparent 35%,
+            rgba(0,0,0,0.22) 100%
+        );
+
+    mix-blend-mode: overlay;
+
+    opacity: 0.8;
+}
+
+.scroll-carousel__sticky {
+    position: sticky;
+    top: 0;
+
+    width: 100%;
+    height: 100vh;
+
+    display: flex;
+    align-items: center;
+
+    overflow: hidden;
+
+    padding-left: 120px;
+    padding-right: 120px;
+}
+
+.scroll-carousel__cards {
+    display: flex;
+    align-items: center;
+
+    gap: 48px;
+
+    flex-shrink: 0;
+
+    padding-left: 0;
+    padding-right: 0;
+}
+
+
+/* ============================================================
+INDIVIDUAL CARD
+============================================================ */
+
+.scroll-carousel__card {
+
+    --card-main: #FFD400;
+    --card-dark: #213E60;
+    --card-light: #F7EAF1;
+
+    flex: 0 0 350px;
+
+    width: 350px;
+    height: 500px;
+
+    position: relative;
+
+    background: var(--card-main);
+
+    border: 6px solid #1a1a1a;
+
+    box-shadow:
+        10px 10px 0 #000;
+
+    overflow: hidden;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.12s steps(2),
+        box-shadow 0.12s steps(2);
+}
+
+
+/* ============================================================
+HOVER
+============================================================ */
+
+.scroll-carousel__card:hover {
+
+    transform:
+        translate(-4px, -8px);
+
+    box-shadow:
+        14px 14px 0 #000;
+}
+
+
+/* ============================================================
+PIXEL CORNER DECORATION
+============================================================ */
+
+.scroll-carousel__card::before {
+
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    right: 0;
+
+    width: 22px;
+    height: 22px;
+
+    background: #1a1a1a;
+
+    z-index: 5;
+
+    clip-path: polygon(
+        0 0,
+        100% 0,
+        100% 100%,
+        50% 100%,
+        50% 50%,
+        0 50%
+    );
+}
+
+.scroll-carousel__card::after {
+
+    content: "";
+
+    position: absolute;
+
+    bottom: 0;
+    left: 0;
+
+    width: 22px;
+    height: 22px;
+
+    background: #1a1a1a;
+
+    z-index: 5;
+
+    clip-path: polygon(
+        0 0,
+        50% 0,
+        50% 50%,
+        100% 50%,
+        100% 100%,
+        0 100%
+    );
+}
+
+
+/* ============================================================
+IMAGE
+============================================================ */
+
+.scroll-carousel__card img {
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    image-rendering: auto;
+
+    transition:
+        transform 0.2s steps(3),
+        filter 0.2s steps(2);
+}
+
+
+/* Darken artwork slightly */
+
+.scroll-carousel__card:hover img {
+
+    transform: scale(1.04);
+
+    filter:
+        saturate(1.25)
+        contrast(1.1);
+}
+
+
+/* ============================================================
+IMAGE OVERLAY
+============================================================ */
+
+.scroll-carousel__card > img {
+
+    filter:
+        saturate(0.9)
+        contrast(1.05);
+}
+
+
+/* ============================================================
+TOP HUD
+============================================================ */
+
+.scroll-carousel__card::marker {
+    display: none;
+}
+
+
+/* ============================================================
+CARD TITLE
+============================================================ */
+
+.scroll-carousel__card-title {
+
+    position: absolute;
+
+    left: 18px;
+    right: 18px;
+    bottom: 72px;
+
+    z-index: 4;
+
+    color: #1a1a1a;
+
+    font-family: 'retro';
+
+    font-size: 25px;
+
+    line-height: 1.25;
+
+    text-transform: uppercase;
+
+    text-align: left;
+
+    background: var(--card-main);
+
+    border: 4px solid #1a1a1a;
+
+    box-shadow:
+        5px 5px 0 #1a1a1a;
+
+    padding: 14px 16px;
+
+    transition:
+        transform 0.12s steps(2);
+}
+
+.scroll-carousel__card:hover
+.scroll-carousel__card-title {
+
+    transform:
+        translate(-3px, -3px);
+}
+
+
+/* ============================================================
+CARD FOOTER
+============================================================ */
+
+.scroll-carousel__card .card-footer {
+
+    position: absolute;
+
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    z-index: 4;
+
+    height: 55px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 0 16px;
+
+    background: #1a1a1a;
+
+    color: white;
+
+    font-family: 'retro';
+
+    font-size: 8px;
+
+    letter-spacing: 1px;
+}
+
+
+/* ============================================================
+PROJECT NUMBER
+============================================================ */
+
+.scroll-carousel__card .card-number {
+
+    position: absolute;
+
+    top: 15px;
+    left: 15px;
+
+    z-index: 4;
+
+    padding: 8px 10px;
+
+    background: #1a1a1a;
+
+    color: var(--card-main);
+
+    border: 3px solid #1a1a1a;
+
+    font-family: 'retro';
+
+    font-size: 8px;
+
+    letter-spacing: 1px;
+}
+
+
+/* ============================================================
+STATUS
+============================================================ */
+
+.scroll-carousel__card .card-status {
+
+    position: absolute;
+
+    top: 18px;
+    right: 25px;
+
+    z-index: 4;
+
+    color: white;
+
+    font-family: 'retro';
+
+    font-size: 7px;
+
+    letter-spacing: 1px;
+
+    writing-mode: vertical-rl;
+
+    opacity: 0.9;
+}
+
+/* ============================================================
+   PROJECT OVERLAY
+   ============================================================ */
+
+.project-overlay {
+    position: fixed !important;
+    inset: 0 !important;
+
+    width: 100vw !important;
+    height: 100vh !important;
+
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+
+    padding: 30px;
+
+    background: rgba(0, 0, 0, 0.75);
+
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+
+    z-index: 99999 !important;
+}
+
+
+/* ============================================================
+   OVERLAY BACKGROUND
+   ============================================================ */
+
+.project-overlay__background {
+    position: absolute;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background:
+        repeating-linear-gradient(
+            to bottom,
+            rgba(255,255,255,0.035) 0px,
+            rgba(255,255,255,0.035) 1px,
+            transparent 1px,
+            transparent 5px
+        ),
+        rgba(24, 43, 64, 0.96);
+
+    pointer-events: none;
+
+    z-index: 0;
+}
+
+
+/* ============================================================
+   PROJECT WINDOW
+   ============================================================ */
+
+.project-detail {
+    position: relative !important;
+
+    z-index: 2 !important;
+
+    width: min(1400px, 100%);
+    height: min(850px, calc(100vh - 60px));
+    max-height: calc(100vh - 60px);
+
+    /*
+     * Keep the entire project window fixed.
+     * Only designated inner areas are allowed to scroll.
+     */
+    overflow: hidden;
+
+    display: flex;
+    flex-direction: column;
+
+    background: #f7eaf1;
+
+    color: #1a1a1a;
+
+    border: 6px solid #1a1a1a;
+
+    box-shadow:
+        12px 12px 0 #000;
+
+    padding: 30px;
+
+    opacity: 0;
+}
+
+
+/* ============================================================
+   TOP BAR
+   ============================================================ */
+
+.project-detail__top {
+    display: flex;
+
+    justify-content: flex-start;
+    align-items: center;
+
+    gap: 20px;
+
+    flex-shrink: 0;
+
+    margin-bottom: 25px;
+
+    padding-bottom: 15px;
+
+    border-bottom: 5px solid #1a1a1a;
+
+    font-family: 'retro';
+
+    font-size: 10px;
+}
+
+.project-detail__label {
+    color: #213e60;
+}
+
+
+/* ============================================================
+   MAIN CONTENT
+   ============================================================ */
+
+.project-detail__main {
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1.4fr)
+        minmax(300px, 0.8fr);
+
+    gap: 35px;
+
+    /*
+     * Allows the grid to stay inside the fixed window.
+     */
+    flex: 1;
+    min-height: 0;
+
+    overflow: hidden;
+
+    align-items: stretch;
+}
+
+
+
+.project-detail__image img {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    /*
+     * Don't let the image determine the height
+     * of the project window.
+     */
+    min-height: 0;
+
+    object-fit: cover;
+}
+
+
+/* ============================================================
+   IMAGE SCANLINES
+   ============================================================ */
+
+.detail-scanlines {
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 2;
+
+    pointer-events: none;
+
+    background:
+        repeating-linear-gradient(
+            to bottom,
+            rgba(255,255,255,0.08) 0px,
+            rgba(255,255,255,0.08) 1px,
+            transparent 1px,
+            transparent 4px
+        );
+
+    opacity: 0.35;
+
+    mix-blend-mode: overlay;
+}
+
+
+/* ============================================================
+   IMAGE LABEL
+   ============================================================ */
+
+.detail-image-label {
+    position: absolute;
+
+    left: 15px;
+    bottom: 15px;
+
+    z-index: 20;
+
+    display: block;
+
+    padding: 8px 12px;
+
+    background: #1a1a1a;
+    color: #ffd400;
+
+    border: 3px solid #1a1a1a;
+
+    font-family: 'retro';
+    font-size: 8px;
+    line-height: 1.2;
+    letter-spacing: 1px;
+
+    white-space: nowrap;
+
+    pointer-events: none;
+}
+
+/* ============================================================
+   PROJECT VISUAL
+   ============================================================ */
+
+.project-detail__visual {
+    min-width: 0;
+    min-height: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+
+.project-detail__image {
+    position: relative;
+    width: 100%;
+    height: 720px; /* fixed size */
+    flex: 0 0 720px;
+    min-height: 720px;
+    background: #213e60;
+    border: 6px solid #1a1a1a;
+    box-shadow: 10px 10px 0 #1a1a1a;
+    overflow: hidden;
+}
+
+.project-detail__image img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+
+/* ============================================================
+   IMAGE SCANLINES
+   ============================================================ */
+
+.detail-scanlines {
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 2;
+
+    pointer-events: none;
+
+    background:
+        repeating-linear-gradient(
+            to bottom,
+            rgba(255,255,255,0.08) 0px,
+            rgba(255,255,255,0.08) 1px,
+            transparent 1px,
+            transparent 4px
+        );
+
+    opacity: 0.35;
+
+    mix-blend-mode: overlay;
+}
+
+
+/* ============================================================
+   IMAGE LABEL
+   ============================================================ */
+
+.detail-image-label {
+    position: absolute;
+
+    left: 15px;
+    bottom: 15px;
+
+    z-index: 5;
+
+    display: block;
+
+    padding: 8px 12px;
+
+    background: #1a1a1a;
+    color: #ffd400;
+
+    border: 3px solid #1a1a1a;
+
+    font-family: 'retro';
+
+    font-size: 8px;
+    line-height: 1.2;
+
+    letter-spacing: 1px;
+
+    white-space: nowrap;
+
+    pointer-events: none;
+}
+
+
+/* ============================================================
+   CAROUSEL ARROWS
+   ============================================================ */
+
+.project-gallery-arrow {
+    position: absolute;
+
+    top: 50%;
+
+    z-index: 10;
+
+    width: 52px;
+    height: 52px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+
+    background: #ffd400;
+
+    color: #1a1a1a;
+
+    border: 5px solid #1a1a1a;
+
+    box-shadow:
+        5px 5px 0 #1a1a1a;
+
+    font-family: 'retro';
+
+    font-size: 17px;
+
+    line-height: 1;
+
+    cursor: pointer;
+
+    transform: translateY(-50%);
+
+    transition:
+        transform 0.1s steps(2),
+        box-shadow 0.1s steps(2);
+}
+
+
+/* LEFT */
+
+.project-gallery-arrow--prev {
+    left: 15px;
+}
+
+
+/* RIGHT */
+
+.project-gallery-arrow--next {
+    right: 15px;
+}
+
+
+/* HOVER */
+
+.project-gallery-arrow:hover {
+    transform:
+        translate(-3px, -50%);
+
+    box-shadow:
+        8px 8px 0 #1a1a1a;
+}
+
+
+/* RIGHT HOVER needs different horizontal movement */
+
+.project-gallery-arrow--next:hover {
+    transform:
+        translate(3px, -50%);
+}
+
+
+/* CLICK */
+
+.project-gallery-arrow:active {
+    transform:
+        translate(2px, -50%);
+
+    box-shadow:
+        2px 2px 0 #1a1a1a;
+}
+
+.project-gallery-arrow--next:active {
+    transform:
+        translate(-2px, -50%);
+}
+
+/* ============================================================
+   INFO
+   ============================================================ */
+
+.project-detail__info {
+    min-width: 0;
+    min-height: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    overflow: hidden;
+}
+
+.project-detail__status {
+    display: inline-block;
+
+    flex-shrink: 0;
+
+    margin-bottom: 15px;
+
+    color: #213e60;
+
+    font-family: 'retro';
+
+    font-size: 9px;
+
+    letter-spacing: 2px;
+}
+
+/* ============================================================
+   PROJECT STATUS
+   ============================================================ */
+
+.project-detail__status {
+    font-family: 'retro';
+    font-size: 11px;
+    letter-spacing: 1px;
+}
+
+.project-detail__status.completed {
+    color: #2f9e5b;
+}
+
+.project-detail__status.ongoing {
+    color: #d94f7d;
+}
+
+.project-detail__status.failed {
+    color: #d94f4f;
+}
+
+.project-detail__info h2 {
+    margin: 0 0 15px;
+
+    flex-shrink: 0;
+
+    font-family: 'retro';
+
+    font-size: clamp(25px, 3vw, 45px);
+
+    line-height: 1.1;
+
+    text-transform: uppercase;
+}
+
+
+/* ============================================================
+   DESCRIPTION
+   ============================================================ */
+
+.project-description {
+    min-height: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    overflow: hidden;
+}
+
+.project-description__label {
+    flex-shrink: 0;
+}
+
+
+/*
+ * ONLY THE TEXT scrolls.
+ */
+.project-description p {
+    min-height: 0;
+
+    margin: 0;
+
+    overflow-y: auto;
+
+    padding-right: 15px;
+}
+
+
+/* ============================================================
+   EQUIPMENT
+   ============================================================ */
+
+.project-tech {
+    flex-shrink: 0;
+
+    margin-top: 20px;
+}
+
+
+/* ============================================================
+   MOBILE
+   ============================================================ */
+
+@media (max-width: 800px) {
+
+    .project-detail {
+        height: calc(100vh - 30px);
+
+        padding: 20px;
+    }
+
+    .project-detail__main {
+        grid-template-columns: 1fr;
+
+        overflow-y: auto;
+    }
+
+    .project-detail__visual {
+        min-height: 400px;
+    }
+
+    .project-detail__image {
+        min-height: 300px;
+    }
+
+}
+
+
+/* ============================================================
+   META
+   ============================================================ */
+
+.project-detail__meta {
+    display: flex;
+
+    gap: 10px;
+
+    margin-bottom: 30px;
+}
+
+.project-detail__meta span {
+    padding: 8px 10px;
+
+    background: #213e60;
+
+    color: white;
+
+    font-family: 'retro';
+
+    font-size: 8px;
+
+    letter-spacing: 1px;
+}
+
+
+/* ============================================================
+   DESCRIPTION
+   ============================================================ */
+
+.project-description {
+    background: white;
+
+    border: 4px solid #1a1a1a;
+
+    box-shadow:
+        5px 5px 0 #1a1a1a;
+
+    padding: 20px;
+
+    margin-bottom: 30px;
+}
+
+.project-description p {
+    font-family: 'ftlight';
+
+    font-size: 18px;
+
+    line-height: 1.5;
+}
+
+
+/* ============================================================
+   TECHNOLOGIES
+   ============================================================ */
+
+.project-tech {
+    margin-top: 20px;
+}
+
+.project-tech__label {
+    display: block;
+
+    margin-bottom: 12px;
+
+    font-family: 'retro';
+
+    font-size: 9px;
+
+    letter-spacing: 2px;
+
+    color: #213e60;
+}
+
+.project-tech__list {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 8px;
+}
+
+.project-tech__item {
+    padding: 8px 10px;
+
+    background: #ffd400;
+
+    border: 3px solid #1a1a1a;
+
+    box-shadow:
+        3px 3px 0 #1a1a1a;
+
+    font-family: 'retro';
+
+    font-size: 8px;
+}
+
+
+/* ============================================================
+   CLOSE BUTTON
+   ============================================================ */
+
+.project-detail__close {
+    position: absolute;
+
+    top: 7px;
+    right: 17px;
+
+    z-index: 10;
+
+    width: 45px;
+    height: 45px;
+
+    border: 4px solid #1a1a1a;
+
+    background: #ff131e;
+
+    color: white;
+
+    font-family: Arial, sans-serif;
+
+    font-size: 30px;
+
+    line-height: 1;
+
+    cursor: pointer;
+
+    box-shadow:
+        4px 4px 0 #1a1a1a;
+}
+
+.project-detail__close:hover {
+    transform: translate(-2px, -2px);
+
+    box-shadow:
+        6px 6px 0 #1a1a1a;
+}
+
+
+
+/* ============================================================
+   PROJECT DETAIL SCROLLBAR
+   ============================================================ */
+
+.project-detail::-webkit-scrollbar {
+    width: 12px;
+}
+
+.project-detail::-webkit-scrollbar-track {
+    background: #1a1a1a;
+}
+
+.project-detail::-webkit-scrollbar-thumb {
+    background: #ffd400;
+
+    border: 3px solid #1a1a1a;
+}
+
+
+/* ============================================================
+   MOBILE
+   ============================================================ */
+
+@media (max-width: 800px) {
+
+    .project-overlay {
+        padding: 15px;
+    }
+
+    .project-detail {
+        width: 100%;
+
+        max-height: calc(100vh - 30px);
+
+        padding: 20px;
+    }
+
+    .project-detail__main {
+        grid-template-columns: 1fr;
+
+        gap: 25px;
+    }
+
+    .project-detail__image,
+    .project-detail__image img {
+        min-height: 280px;
+    }
+
+    .project-detail__top {
+        padding-right: 50px;
+    }
+
+    .project-detail__bottom {
+        flex-wrap: wrap;
+
+        gap: 10px;
+    }
+}
+
+
+/* ============================================================
+SCANLINES
+============================================================ */
+
+.scroll-carousel__card .card-scanlines {
+
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 3;
+
+    pointer-events: none;
+
+    background:
+        repeating-linear-gradient(
+            to bottom,
+            rgba(255,255,255,0.08),
+            rgba(255,255,255,0.08) 1px,
+            transparent 1px,
+            transparent 4px
+        );
+
+    opacity: 0.35;
+
+    mix-blend-mode: overlay;
+}
+
+
+/* ============================================================
+CARD COLOR VARIANTS
+============================================================ */
+
+/* YELLOW / ARCADE */
+
+.scroll-carousel__card:nth-child(1) {
+
+    --card-main: #FFD400;
+    --card-dark: #213E60;
+    --card-light: #F7EAF1;
+}
+
+
+/* PINK / BOSS */
+
+.scroll-carousel__card:nth-child(2) {
+
+    --card-main: #D94F7D;
+    --card-dark: #213E60;
+    --card-light: #F7EAF1;
+}
+
+
+/* BLUE / TECH */
+
+.scroll-carousel__card:nth-child(3) {
+
+    --card-main: #4FA3D9;
+    --card-dark: #182B40;
+    --card-light: #E8F5FF;
+}
+
+
+/* GREEN / RPG */
+
+.scroll-carousel__card:nth-child(4) {
+
+    --card-main: #7FA650;
+    --card-dark: #26351D;
+    --card-light: #F1F5D8;
+}
+
+
+/* PURPLE / SECRET */
+
+.scroll-carousel__card:nth-child(5) {
+
+    --card-main: #9B72CF;
+    --card-dark: #302047;
+    --card-light: #F3E9FF;
+}
+
+
+/* ORANGE / BONUS */
+
+.scroll-carousel__card:nth-child(6) {
+
+    --card-main: #F47B35;
+    --card-dark: #432719;
+    --card-light: #FFF0E5;
+}
+
+
+/* RED / FINAL BOSS */
+
+.scroll-carousel__card:nth-child(7) {
+
+    --card-main: #FF131E;
+    --card-dark: #3D1114;
+    --card-light: #FFE9EA;
+}
+
+.scroll-carousel__card {
+    cursor: pointer;
+    pointer-events: auto;
+}
+
+.scroll-carousel__card > * {
+    pointer-events: none;
+}
+
+.scroll-carousel__card img,
+.scroll-carousel__card .card-scanlines,
+.scroll-carousel__card .card-number,
+.scroll-carousel__card .card-status,
+.scroll-carousel__card .scroll-carousel__card-title,
+.scroll-carousel__card .card-footer,
+.scroll-carousel__card .card-glitch {
+    pointer-events: none;
+}
+
+
+/* ============================================================
+MOBILE
+============================================================ */
+
+@media (max-width: 800px) {
+
+    .scroll-carousel__sticky {
+
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+
+    .scroll-carousel__card {
+
+        flex: 0 0 280px;
+
+        width: 280px;
+        height: 420px;
+    }
+
+    .scroll-carousel__card-title {
+
+        font-size: 19px;
+
+        left: 12px;
+        right: 12px;
+        bottom: 65px;
+
+        padding: 12px;
+    }
+
+}
+
+/* ============================================================
+   SKILLS / CHARACTER PROFILE
+   ============================================================ */
+
+.skills {
+    min-height: 100vh;
+
+    background: #d94f7d;
+
+    padding: 80px 8vw;
+
+    color: #1a1a1a;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* ------------------------------------------------------------
+   HEADER
+   ------------------------------------------------------------ */
+
+.skills__header {
+    margin-bottom: 50px;
+}
+
+.skills__eyebrow {
+    font-family: 'retro';
+    font-size: 14px;
+    letter-spacing: 3px;
+}
+
+.skills__header h2 {
+    margin-top: 15px;
+
+    font-family: 'ftbold';
+    font-size: clamp(50px, 7vw, 110px);
+}
+
+
+/* ------------------------------------------------------------
+   MAIN SCREEN
+   ------------------------------------------------------------ */
+
+.skills__screen {
+
+    width: min(1400px, 100%);
+
+    height: 720px;
+
+    display: grid;
+
+    grid-template-columns: 300px 1fr;
+
+    margin: 0 auto;
+
+    background: #f7eaf1;
+
+    border: 6px solid #1a1a1a;
+
+    box-shadow:
+        10px 10px 0 #1a1a1a;
+
+    overflow: hidden;
+}
+
+
+/* ------------------------------------------------------------
+   CHARACTER
+   ------------------------------------------------------------ */
+
+.skills__profile {
+    padding: 40px;
+
+    border-right: 6px solid #1a1a1a;
+
+    background: #213e60;
+
+    color: white;
+}
+
+.pixel-avatar {
+    width: 200px;
+    height: 200px;
+
+    margin: 0 auto 30px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #ffd400;
+
+    border: 6px solid #1a1a1a;
+
+    box-shadow:
+        8px 8px 0 #1a1a1a;
+}
+
+.pixel-avatar__placeholder {
+    font-family: 'retro';
+    font-size: 16px;
+
+    text-align: center;
+
+    color: #1a1a1a;
+}
+
+.skills__profile h3 {
+    font-family: 'retro';
+    font-size: 30px;
+
+    margin-bottom: 10px;
+}
+
+.skills__class {
+    font-family: 'ftlight';
+    font-size: 18px;
+
+    margin-bottom: 40px;
+}
+
+
+/* ------------------------------------------------------------
+   STATS
+   ------------------------------------------------------------ */
+
+.skills__stats {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.stat span {
+    display: block;
+
+    margin-bottom: 7px;
+
+    font-family: 'retro';
+    font-size: 11px;
+}
+
+.stat__bar {
+    height: 18px;
+
+    background: #1a1a1a;
+
+    padding: 3px;
+}
+
+.stat__bar div {
+    height: 100%;
+
+    background: #ffd400;
+}
+
+
+/* ------------------------------------------------------------
+   CONTENT
+   ------------------------------------------------------------ */
+
+.skills__content {
+    padding: 40px;
+}
+
+
+/* ------------------------------------------------------------
+   TABS
+   ------------------------------------------------------------ */
+
+.skills__tabs {
+    display: flex;
+
+    gap: 8px;
+
+    margin-bottom: 40px;
+
+    border-bottom: 5px solid #1a1a1a;
+}
+
+.skill-tab {
+    position: relative;
+
+    border: 0;
+
+    padding: 15px 20px;
+
+    background: transparent;
+
+    color: #1a1a1a;
+
+    font-family: 'retro';
+    font-size: 12px;
+
+    cursor: pointer;
+}
+
+
+/* little 8-bit cursor/indicator */
+
+.skill-tab::after {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    bottom: -5px;
+
+    width: 100%;
+    height: 5px;
+
+    background: #d94f7d;
+
+    transform: scaleX(0);
+
+    transform-origin: left;
+
+    transition:
+        transform 0.2s steps(4);
+}
+
+.skill-tab:hover::after,
+.skill-tab.active::after {
+    transform: scaleX(1);
+}
+
+
+/* ------------------------------------------------------------
+   PANELS
+   ------------------------------------------------------------ */
+
+.skill-panel {
+    display: none;
+}
+
+.skill-panel.active {
+    display: block;
+}
+
+.skill-panel h3 {
+    font-family: 'retro';
+
+    font-size: 25px;
+
+    margin-bottom: 30px;
+}
+
+
+/* ------------------------------------------------------------
+   SKILL ITEMS
+   ------------------------------------------------------------ */
+
+.skill-list {
+    display: flex;
+    flex-direction: column;
+
+    gap: 15px;
+}
+
+.skill-item {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 18px 20px;
+
+    background: #213e60;
+
+    color: white;
+
+    font-family: 'ftbold';
+
+    border-left: 8px solid #ffd400;
+
+    transition:
+        transform 0.15s steps(2);
+}
+
+.skill-item:hover {
+    transform: translateX(8px);
+}
+
+/* ============================================================
+   BUSINESS — QUEST DATABASE
+   ============================================================ */
+
+#business {
+    height: 100%;
+    overflow: hidden;
+}
+
+
+/* ------------------------------------------------------------
+   HEADER
+   ------------------------------------------------------------ */
+
+#business .panel-header {
+    margin-bottom: 20px;
+}
+
+#business .panel-label {
+    display: block;
+
+    font-family: 'retro';
+    font-size: 9px;
+
+    letter-spacing: 3px;
+
+    opacity: 0.55;
+}
+
+#business .panel-header h3 {
+    margin-top: 8px;
+
+    font-family: 'retro';
+    font-size: 22px;
+}
+
+
+/* ------------------------------------------------------------
+   QUEST WINDOW
+   ------------------------------------------------------------ */
+
+.quest-window {
+
+    width: 100%;
+    height: 500px;
+
+    background: #213e60;
+
+    border: 5px solid #1a1a1a;
+
+    box-shadow:
+        7px 7px 0 #1a1a1a;
+
+    padding: 8px;
+
+    overflow: hidden;
+
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* ------------------------------------------------------------
+   WINDOW HEADER
+   ------------------------------------------------------------ */
+
+.quest-window__header {
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 12px 15px;
+
+    background: #ffd400;
+
+    color: #1a1a1a;
+
+    border-bottom: 4px solid #1a1a1a;
+
+    font-family: 'retro';
+
+    font-size: 9px;
+
+    letter-spacing: 1px;
+}
+
+
+.quest-count {
+    opacity: 0.65;
+}
+
+
+/* ------------------------------------------------------------
+   SCROLL AREA
+   ------------------------------------------------------------ */
+
+.quest-list {
+
+    flex: 1;
+
+    min-height: 0;
+
+    overflow-y: auto;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 14px;
+
+    padding: 18px 15px 18px 15px;
+}
+
+
+/* ------------------------------------------------------------
+   CUSTOM 8-BIT SCROLLBAR
+   ------------------------------------------------------------ */
+
+.quest-list::-webkit-scrollbar {
+    width: 14px;
+}
+
+
+.quest-list::-webkit-scrollbar-track {
+
+    background: #1a1a1a;
+
+    border-left: 4px solid #213e60;
+}
+
+
+.quest-list::-webkit-scrollbar-thumb {
+
+    background: #ffd400;
+
+    border: 3px solid #1a1a1a;
+
+    min-height: 45px;
+}
+
+
+.quest-list::-webkit-scrollbar-thumb:hover {
+
+    background: #d94f7d;
+}
+
+
+/* Firefox */
+
+.quest-list {
+    scrollbar-width: auto;
+
+    scrollbar-color:
+        #ffd400
+        #1a1a1a;
+}
+
+
+/* ------------------------------------------------------------
+   QUEST CARD
+   ------------------------------------------------------------ */
+
+.quest {
+
+    position: relative;
+
+    flex-shrink: 0;
+
+    display: grid;
+
+    grid-template-columns: 50px 1fr auto;
+
+    gap: 15px;
+
+    align-items: center;
+
+    padding: 15px;
+
+    background: #f7eaf1;
+
+    color: #1a1a1a;
+
+    border: 4px solid #1a1a1a;
+
+    box-shadow:
+        4px 4px 0 #1a1a1a;
+
+    transition:
+        transform 0.15s steps(2);
+}
+
+
+/* Hover */
+
+.quest:hover {
+
+    transform:
+        translate(5px, -3px);
+}
+
+
+/* Little pixel arrow */
+
+.quest::before {
+
+    content: ">";
+
+    position: absolute;
+
+    left: -18px;
+
+    top: 50%;
+
+    transform:
+        translateY(-50%);
+
+    font-family: 'retro';
+
+    font-size: 12px;
+
+    color: #ffd400;
+
+    opacity: 0;
+
+    transition:
+        opacity 0.1s steps(2);
+}
+
+
+.quest:hover::before {
+    opacity: 1;
+}
+
+
+/* ------------------------------------------------------------
+   QUEST NUMBER
+   ------------------------------------------------------------ */
+
+.quest__icon {
+
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background: #ffd400;
+
+    color: #1a1a1a;
+
+    border: 3px solid #1a1a1a;
+
+    font-family: 'retro';
+
+    font-size: 9px;
+}
+
+
+/* ------------------------------------------------------------
+   QUEST CONTENT
+   ------------------------------------------------------------ */
+
+.quest__content {
+    min-width: 0;
+}
+
+
+.quest__status {
+
+    display: block;
+
+    margin-bottom: 5px;
+
+    font-family: 'retro';
+
+    font-size: 7px;
+
+    color: #213e60;
+
+    letter-spacing: 1px;
+}
+
+
+.quest__status.active {
+
+    color: #d94f7d;
+}
+
+
+.quest h4 {
+
+    margin: 0 0 5px;
+
+    font-family: 'retro';
+
+    font-size: 11px;
+
+    line-height: 1.4;
+}
+
+
+.quest p {
+
+    margin: 0;
+
+    font-family: 'ftlight';
+
+    font-size: 14px;
+
+    line-height: 1.35;
+}
+
+
+/* ------------------------------------------------------------
+   XP
+   ------------------------------------------------------------ */
+
+.quest__xp {
+
+    align-self: center;
+
+    white-space: nowrap;
+
+    font-family: 'retro';
+
+    font-size: 8px;
+
+    color: #213e60;
+}
+
+
+/* ------------------------------------------------------------
+   MOBILE
+   ------------------------------------------------------------ */
+
+@media (max-width: 800px) {
+
+    .quest-window {
+        height: 500px;
+    }
+
+
+    .quest {
+
+        grid-template-columns:
+            42px 1fr;
+
+        gap: 12px;
+    }
+
+
+    .quest__xp {
+
+        grid-column: 2;
+
+        justify-self: start;
+
+        margin-top: 3px;
+    }
+
+
+    .quest h4 {
+        font-size: 10px;
+    }
+
+
+    .quest p {
+        font-size: 13px;
+    }
+
+}
+
+/* ============================================================
+   CREATIVE — INVENTORY
+   ============================================================ */
+
+#creative .panel-header {
+    margin-bottom: 30px;
+}
+
+.inventory {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.inventory-item {
+    display: grid;
+    grid-template-columns: 70px 1fr;
+    gap: 15px;
+
+    position: relative;
+
+    padding: 18px;
+
+    min-height: 150px;
+
+    background: white;
+
+    border: 4px solid #1a1a1a;
+
+    box-shadow: 5px 5px 0 #1a1a1a;
+
+    transition:
+        transform 0.15s steps(2);
+}
+
+.inventory-item:hover {
+    transform: translateY(-5px);
+}
+
+.inventory-item.featured {
+    background: #ffd400;
+}
+
+.inventory-icon {
+    width: 60px;
+    height: 60px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #213e60;
+
+    color: white;
+
+    border: 4px solid #1a1a1a;
+
+    font-family: 'retro';
+    font-size: 10px;
+}
+
+.inventory-item h4 {
+    font-family: 'retro';
+    font-size: 12px;
+    margin-bottom: 8px;
+}
+
+.inventory-item p {
+    font-family: 'ftlight';
+    font-size: 15px;
+    line-height: 1.35;
+}
+
+.item-level {
+    position: absolute;
+    bottom: 10px;
+    right: 12px;
+
+    font-family: 'retro';
+    font-size: 8px;
+}
+
+/* ============================================================
+   PERSONALITY — PASSIVE ABILITIES
+   ============================================================ */
+
+.personality-screen {
+    height: 100%;
+}
+
+.personality-title {
+    margin-bottom: 30px;
+}
+
+.personality-title span {
+    font-family: 'retro';
+    font-size: 10px;
+    letter-spacing: 3px;
+}
+
+.personality-title h3 {
+    margin-top: 10px;
+
+    font-family: 'retro';
+    font-size: 25px;
+}
+
+.ability-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.ability {
+    position: relative;
+
+    min-height: 180px;
+
+    padding: 25px;
+
+    background: #213e60;
+
+    color: white;
+
+    border: 5px solid #1a1a1a;
+
+    box-shadow: 7px 7px 0 #1a1a1a;
+
+    transition:
+        transform 0.15s steps(2);
+}
+
+.ability:hover {
+    transform: translate(5px, -5px);
+}
+
+.ability__tag {
+    font-family: 'retro';
+    font-size: 8px;
+
+    color: #ffd400;
+}
+
+.ability__tag.rare {
+    color: #d94f7d;
+}
+
+.ability h4 {
+    margin: 12px 0;
+
+    font-family: 'retro';
+    font-size: 14px;
+}
+
+.ability p {
+    font-family: 'ftlight';
+    font-size: 16px;
+    line-height: 1.4;
+}
+
+.ability strong {
+    display: block;
+
+    margin-top: 15px;
+
+    font-family: 'retro';
+    font-size: 8px;
+
+    color: #ffd400;
+}
