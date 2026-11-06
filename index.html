@@ -2,27 +2,26 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Thijs Verhoeven</title>
     <link rel="stylesheet" href="main.css">
     <link href="https://unpkg.com/nes.css@latest/css/nes.min.css" rel="stylesheet">
     <link rel="stylesheet" href="flag-hiker.css">
+    <link rel="stylesheet" href="mobile.css">
 </head>
 <body>
+    <div id="top"></div>
     <!-- LOADER -->
     <div class="loader_wrapper">
         <div id="loading-animation">
-            <p style="display:none;">A</p>
-            <p style="display:none;">B</p>
-            <p style="display:none;">C</p>
-            <p style="display:none;">D</p>
-            <p style="display:none;">E</p>
-            <p style="display:none;">F</p>
-            <p style="display:none;">G</p>
-            <p style="display:none;">H</p>
-            <p style="display:none;">I</p>
-            <p style="display:none;">J</p>
+            <img src="project-images/logos/1.png" alt="Loading" />
+            <img src="project-images/logos/2.png" alt="Loading" />
+            <img src="project-images/logos/3.png" alt="Loading" />
+            <img src="project-images/logos/4.png" alt="Loading" />
+            <img src="project-images/logos/5.png" alt="Loading" />
+            <img src="project-images/logos/6.png" alt="Loading" />
         </div>
+
         <div class="stripe"></div>
         <div class="stripe"></div>
         <div class="stripe"></div>
@@ -30,19 +29,21 @@
     </div>
 
     <!-- HEADER -->
-    <header>
-        <div class="logo">Logo</div>
+    <header>    
+        <div class="logo"><a href="/#top" class="logo" aria-label="Home">
+        <img src="project-images/logo.png" alt="TV" />
+    </a></div>
         <nav>
             <ul>
                 <li><a href="#projects" data-i18n="nav.projects">Projects</a></li>
-                <li><a href="#about" data-i18n="nav.about">About Me</a></li>
+                <li><a href="#skills" data-i18n="nav.about">About Me</a></li>
                 <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
             </ul>
         </nav>
     </header>
 
     <!-- HERO -->
-    <div class="container">
+    <div class="container" id = "home">
         <div id="grained-background"></div>
         <div class="content">
             <h2 class="base">THIJS VERHOEVEN</h2>
@@ -77,13 +78,13 @@
 
                 <p class="reveal-type">
                     <span data-i18n="intro.paragraph3.before">I'm currently</span>
-                    <span class="retro-font" data-i18n="intro.paragraph3.highlight">open to new opportunities</span>
+                    <span class="retro-font" data-i18n="intro.paragraph3.highlight">looking for new opportunities</span>
                     <span data-i18n="intro.paragraph3.after">where I can build, learn, and make an impact with technology.</span>
                 </p>
             </section>
 
             <section>
-                <a href="#about" class="nes-btn" role="link" data-i18n="intro.moreAbout">
+                <a href="#skills" class="nes-btn" role="link" data-i18n="intro.moreAbout">
                     More about me :)
                 </a>
             </section>
@@ -168,520 +169,297 @@
         </div>
     </div>
 <section class="skills" id="skills">
+  <div class="cs">
 
+    <!-- ICON MENU -->
+    <nav class="cs__menu" aria-label="Character menu" data-i18n-attr="aria-label:cs.menuLabel">
+      <button class="cs-tab active" data-page="character" data-icon="char"><span class="cs-tab__icon"></span><span class="cs-tab__label" data-i18n="cs.tab.character">CHARACTER</span></button>
+      <button class="cs-tab" data-page="work" data-icon="sword"><span class="cs-tab__icon"></span><span class="cs-tab__label" data-i18n="cs.tab.work">WORK XP</span></button>
+      <button class="cs-tab" data-page="school" data-icon="scroll"><span class="cs-tab__icon"></span><span class="cs-tab__label" data-i18n="cs.tab.school">SCHOOL</span></button>
+      <button class="cs-tab" data-page="skills" data-icon="star"><span class="cs-tab__icon"></span><span class="cs-tab__label" data-i18n="cs.tab.skills">SKILLS</span></button>
+      <button class="cs-tab" data-page="languages" data-icon="chat"><span class="cs-tab__icon"></span><span class="cs-tab__label" data-i18n="cs.tab.languages">LANGUAGES</span></button>
+      <button class="cs-tab" data-page="sidequests" data-icon="map"><span class="cs-tab__icon"></span><span class="cs-tab__label" data-i18n="cs.tab.sidequests">SIDE QUESTS</span></button>
+    </nav>
 
-    <div class="skills__screen">
+    <!-- PAGES -->
+    <div class="cs__screen">
 
-        <!-- LEFT: character/profile -->
-        <div class="skills__profile">
+      <!-- 1. CHARACTER -->
+      <div class="cs-page active" id="page-character">
+        <div class="cs-char">
+          <div class="cs-char__left">
+            <div class="cs-photo">
+              <img src="project-images/me.jpg" alt="Thijs">
+              <div class="cs-photo__scan"></div>
+            </div>
+            <h3 class="cs-name">THIJS</h3>
+            <p class="cs-class" data-i18n="cs.class">LVL 25 · IT &amp; BUSINESS ENGINEER</p>
+            <div class="cs-stats">
+              <div class="cs-stat"><span data-i18n="cs.stat.hp">HP · ENERGY</span><div class="cs-bar"><i data-w="80"></i></div></div>
+              <div class="cs-stat"><span data-i18n="cs.stat.mp">MP · CURIOSITY</span><div class="cs-bar"><i data-w="95"></i></div></div>
+              <div class="cs-stat"><span data-i18n="cs.stat.xp">XP · NEXT LEVEL</span><div class="cs-bar"><i data-w="65"></i></div></div>
+            </div>
+          </div>
 
-            <div class="pixel-avatar">
-                <div class="pixel-avatar__placeholder">
-                    CHARACTER
-                </div>
+          <div class="cs-char__right">
+            <div class="cs-dialog">
+              <span class="cs-dialog__name">THIJS</span>
+              <p id="typeText"></p>
+              <button class="cs-next" id="dlgNext" aria-label="Next">▼</button>
             </div>
 
-            <h3>THIJS</h3>
-
-            <p class="skills__class">
-                IT & BUSINESS ENGINEER
-            </p>
-
-            <div class="skills__stats">
-
-                <div class="stat">
-                    <span>PROBLEM SOLVING</span>
-                    <div class="stat__bar">
-                        <div style="width: 90%"></div>
-                    </div>
-                </div>
-
-                <div class="stat">
-                    <span>CURIOSITY</span>
-                    <div class="stat__bar">
-                        <div style="width: 95%"></div>
-                    </div>
-                </div>
-
-                <div class="stat">
-                    <span>CREATIVITY</span>
-                    <div class="stat__bar">
-                        <div style="width: 85%"></div>
-                    </div>
-                </div>
-
+            <div class="cs-grid">
+              <div class="cs-box">
+                <h4 data-i18n="cs.hobbies.title">▸ HOBBIES</h4>
+                <ul>
+                  <li>⛳&nbsp;&nbsp;&nbsp;<span data-i18n="cs.hobbies.golf">Golf</span></li>
+                  <li>🎶&nbsp;&nbsp;&nbsp;<span data-i18n="cs.hobbies.music">Music Production</span></li>
+                  <li>🗺️&nbsp;&nbsp;&nbsp;<span data-i18n="cs.hobbies.adventuring">Adventuring</span></li>
+                  <li>📸&nbsp;&nbsp;&nbsp;<span data-i18n="cs.hobbies.video">Videography</span></li>
+                  <li>🏋️‍♂️&nbsp;&nbsp;&nbsp;<span data-i18n="cs.hobbies.fit">Staying fit</span></li>
+                </ul>
+              </div>
+              <div class="cs-box">
+                <h4 data-i18n="cs.equipped.title">▸ EQUIPPED</h4>
+                <ul>
+                  <li>🛡️&nbsp;&nbsp;&nbsp;Microsoft Power Platform</li>
+                  <li>🤖&nbsp;&nbsp;&nbsp;<span data-i18n="cs.equipped.ai">Artificial Intelligence (AI)</span></li>
+                  <li>🐍&nbsp;&nbsp;&nbsp;Python</li>
+                  <li>⚙️&nbsp;&nbsp;&nbsp;Robotic Process Automation</li>
+                  <li>📊&nbsp;&nbsp;&nbsp;<span data-i18n="cs.equipped.reporting">Reporting (Power BI/Grafana)</span></li>
+                  <li>🗄️&nbsp;&nbsp;&nbsp;<span data-i18n="cs.equipped.sql">SQL &amp; Database Management</span></li>
+                </ul>
+              </div>
+              <div class="cs-box cs-box--wide">
+                <h4 data-i18n="cs.more.title">▸ MORE ABOUT ME</h4>
+                <p data-i18n="cs.more.text">I am a curious spirit, I often spend my evenings learning new things, trying out ideas and challenging myself. I love the concept of side-quests, always looking for new experiences, being spontaneous and saying yes to random stuff outside of my comfort-zone! :)</p>
+              </div>
             </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. WORK -->
+      <div class="cs-page" id="page-work">
+        <div class="cs-timeline">
+
+          <div class="cs-event">
+            <span class="cs-event__date" data-i18n="cs.work.bechtle.date">01-2025 — NOW</span>
+            <h4 data-i18n="cs.work.bechtle.title">POWER PLATFORM ENGINEER &amp; DATA ANALYST</h4>
+            <p class="cs-event__where">@ BECHTLE</p>
+            <p data-i18n="cs.work.bechtle.text">Developing business automation solutions, data-driven reporting, and AI integrations to optimize internal processes and improve business efficiency. Progressed from Data Analyst to Business Analyst / Power Platform Engineer by identifying and implementing automation opportunities that significantly reduced manual workload and enabled the company to pursue tenders that were previously unfeasible.</p>
+            <div class="cs-tags">
+              <b>Power Platform</b>
+              <b>Power BI</b>
+              <b>Python</b>
+              <b>SQL</b>
+              <b>AI</b>
+            </div>
+          </div>
+
+          <div class="cs-event">
+            <span class="cs-event__date">09-2023 — 07-2024</span>
+            <h4 data-i18n="cs.work.amexio.title">GRADUATION INTERN · CONSULTANCY</h4>
+            <p class="cs-event__where">@ AMEXIO</p>
+            <p data-i18n="cs.work.amexio.text">Researched and developed a Reporting API that enables customers to independently create and configure Grafana dashboards. Translated stakeholder requirements into a scalable technical solution, replacing time-consuming, customer-specific manual dashboard creation with a more flexible and maintainable reporting process.</p>
+            <div class="cs-tags">
+              <b data-i18n="cs.tag.apiDev">API Development</b>
+              <b data-i18n="cs.tag.dataAnalysis">Data Analysis</b>
+            </div>
+          </div>
+
+          <div class="cs-event">
+            <span class="cs-event__date">08-2022 — 01-2023</span>
+            <h4 data-i18n="cs.work.fontys.title">RESEARCH INTERN · INTERACTION DESIGN</h4>
+            <p class="cs-event__where" data-i18n="cs.school.fontysName">@ FONTYS UNIVERSITY OF APPLIED SCIENCES</p>
+            <p data-i18n="cs.work.fontys.text">In this internship I managed a project to find/create a space where Fontys is able to share their learning materials within the brainport area, so smaller businesses could easily find and create low-code apps or digital ideas that allow their company to grow.</p>
+            <div class="cs-tags">
+              <b data-i18n="cs.tag.research">Research</b>
+              <b data-i18n="cs.tag.stakeholder">Stakeholder Management</b>
+              <b data-i18n="cs.tag.toolSelection">Tool selection</b>
+            </div>
+          </div>
+
+          <div class="cs-event">
+            <span class="cs-event__date">07-2023 — 11-2024</span>
+            <h4 data-i18n="cs.work.casualgolf.title">SHOPIFY MANAGER</h4>
+            <p class="cs-event__where">@ CASUALGOLF</p>
+            <p data-i18n="cs.work.casualgolf.text">Managed day-to-day e-commerce operations, maintaining the Shopify storefront and executing marketing activities and visual content creation to support the brand's online presence.</p>
+            <div class="cs-tags">
+              <b>Shopify</b>
+              <b>E-commerce</b>
+              <b data-i18n="cs.tag.digitalMarketing">Digital Marketing</b>
+            </div>
+          </div>
 
         </div>
-
-
-        <!-- RIGHT: tabs/content -->
-        <div class="skills__content">
-
-            <div class="skills__tabs">
-
-                <button class="skill-tab active" data-tab="technical">
-                    TECH
-                </button>
-
-                <button class="skill-tab" data-tab="business">
-                    BUSINESS
-                </button>
-
-                <button class="skill-tab" data-tab="creative">
-                    CREATIVE
-                </button>
-
-                <button class="skill-tab" data-tab="personality">
-                    PERSONALITY
-                </button>
-
-            </div>
-
-
-            <div class="skill-panel active" id="technical">
-
-                <h3>TECHNICAL SKILLS</h3>
-
-                <div class="skill-list">
-
-                    <div class="skill-item">
-                        <span>Power Platform</span>
-                        <span>★★★★★</span>
-                    </div>
-
-                    <div class="skill-item">
-                        <span>Power Automate</span>
-                        <span>★★★★★</span>
-                    </div>
-
-                    <div class="skill-item">
-                        <span>Power Apps</span>
-                        <span>★★★★☆</span>
-                    </div>
-
-                    <div class="skill-item">
-                        <span>JavaScript</span>
-                        <span>★★★★☆</span>
-                    </div>
-
-                    <div class="skill-item">
-                        <span>HTML / CSS</span>
-                        <span>★★★★★</span>
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <div class="skill-panel" id="business">
-
-                <div class="panel-header">
-                    <span class="panel-label">QUEST DATABASE</span>
-                    <h3>BUSINESS MISSIONS</h3>
-                </div>
-
-                <div class="quest-window">
-
-                    <!-- Window header -->
-                    <div class="quest-window__header">
-
-                        <span>ACTIVE QUESTS</span>
-
-                        <span class="quest-count">
-                            04 / 08
-                        </span>
-
-                    </div>
-
-
-                    <!-- Scrollable quest area -->
-                    <div class="quest-list">
-
-
-                        <!-- QUEST 01 -->
-                        <div class="quest">
-
-                            <div class="quest__icon">
-                                01
-                            </div>
-
-                            <div class="quest__content">
-
-                                <span class="quest__status">
-                                    COMPLETED
-                                </span>
-
-                                <h4>
-                                    UNDERSTAND THE PROBLEM
-                                </h4>
-
-                                <p>
-                                    Breaking down complex business problems
-                                    and figuring out what actually needs to be solved.
-                                </p>
-
-                            </div>
-
-                            <div class="quest__xp">
-                                +250 XP
-                            </div>
-
-                        </div>
-
-
-                        <!-- QUEST 02 -->
-                        <div class="quest">
-
-                            <div class="quest__icon">
-                                02
-                            </div>
-
-                            <div class="quest__content">
-
-                                <span class="quest__status">
-                                    COMPLETED
-                                </span>
-
-                                <h4>
-                                    IMPROVE THE PROCESS
-                                </h4>
-
-                                <p>
-                                    Finding inefficient processes and turning
-                                    them into something simpler and smarter.
-                                </p>
-
-                            </div>
-
-                            <div class="quest__xp">
-                                +400 XP
-                            </div>
-
-                        </div>
-
-
-                        <!-- QUEST 03 -->
-                        <div class="quest">
-
-                            <div class="quest__icon">
-                                03
-                            </div>
-
-                            <div class="quest__content">
-
-                                <span class="quest__status active">
-                                    ONGOING
-                                </span>
-
-                                <h4>
-                                    BRIDGE BUSINESS &amp; IT
-                                </h4>
-
-                                <p>
-                                    Translating between people, processes
-                                    and technology.
-                                </p>
-
-                            </div>
-
-                            <div class="quest__xp">
-                                +500 XP
-                            </div>
-
-                        </div>
-
-
-                        <!-- QUEST 04 -->
-                        <div class="quest">
-
-                            <div class="quest__icon">
-                                04
-                            </div>
-
-                            <div class="quest__content">
-
-                                <span class="quest__status">
-                                    COMPLETED
-                                </span>
-
-                                <h4>
-                                    AUTOMATE THE BORING STUFF
-                                </h4>
-
-                                <p>
-                                    Finding repetitive work and figuring out
-                                    how technology can take care of it.
-                                </p>
-
-                            </div>
-
-                            <div class="quest__xp">
-                                +350 XP
-                            </div>
-
-                        </div>
-
-
-                        <!-- QUEST 05 -->
-                        <div class="quest">
-
-                            <div class="quest__icon">
-                                05
-                            </div>
-
-                            <div class="quest__content">
-
-                                <span class="quest__status">
-                                    COMPLETED
-                                </span>
-
-                                <h4>
-                                    TURN IDEAS INTO SOLUTIONS
-                                </h4>
-
-                                <p>
-                                    Taking an idea from a conversation and
-                                    turning it into something people can use.
-                                </p>
-
-                            </div>
-
-                            <div class="quest__xp">
-                                +450 XP
-                            </div>
-
-                        </div>
-
-
-                        <!-- QUEST 06 -->
-                        <div class="quest">
-
-                            <div class="quest__icon">
-                                06
-                            </div>
-
-                            <div class="quest__content">
-
-                                <span class="quest__status active">
-                                    ONGOING
-                                </span>
-
-                                <h4>
-                                    LEARN SOMETHING NEW
-                                </h4>
-
-                                <p>
-                                    Constantly expanding the toolbox and
-                                    finding better ways of doing things.
-                                </p>
-
-                            </div>
-
-                            <div class="quest__xp">
-                                +300 XP
-                            </div>
-
-                        </div>
-
-
-                        <!-- QUEST 07 -->
-                        <div class="quest">
-
-                            <div class="quest__icon">
-                                07
-                            </div>
-
-                            <div class="quest__content">
-
-                                <span class="quest__status">
-                                    COMPLETED
-                                </span>
-
-                                <h4>
-                                    MAKE COMPLEX THINGS SIMPLE
-                                </h4>
-
-                                <p>
-                                    Turning complicated technical concepts
-                                    into something understandable.
-                                </p>
-
-                            </div>
-
-                            <div class="quest__xp">
-                                +500 XP
-                            </div>
-
-                        </div>
-
-
-                        <!-- QUEST 08 -->
-                        <div class="quest">
-
-                            <div class="quest__icon">
-                                08
-                            </div>
-
-                            <div class="quest__content">
-
-                                <span class="quest__status active">
-                                    ONGOING
-                                </span>
-
-                                <h4>
-                                    BUILD SOMETHING COOL
-                                </h4>
-
-                                <p>
-                                    Sometimes the best way to learn is simply
-                                    to start building and see where it goes.
-                                </p>
-
-                            </div>
-
-                            <div class="quest__xp">
-                                +750 XP
-                            </div>
-
-                        </div>
-
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <div class="skill-panel" id="creative">
-
-                <div class="panel-header">
-                    <span class="panel-label">INVENTORY</span>
-                    <h3>CREATIVE TOOLKIT</h3>
-                </div>
-
-                <div class="inventory">
-
-                    <div class="inventory-item featured">
-                        <div class="inventory-icon">UI</div>
-
-                        <div>
-                            <h4>UI / UX</h4>
-                            <p>Turning ideas into interfaces people actually enjoy using.</p>
-                        </div>
-
-                        <span class="item-level">LV. 05</span>
-                    </div>
-
-
-                    <div class="inventory-item">
-                        <div class="inventory-icon">WEB</div>
-
-                        <div>
-                            <h4>WEB DESIGN</h4>
-                            <p>Designing websites with personality instead of templates.</p>
-                        </div>
-
-                        <span class="item-level">LV. 05</span>
-                    </div>
-
-
-                    <div class="inventory-item">
-                        <div class="inventory-icon">IDEA</div>
-
-                        <div>
-                            <h4>CREATIVE PROBLEM SOLVING</h4>
-                            <p>Trying the weird idea when the obvious one isn't enough.</p>
-                        </div>
-
-                        <span class="item-level">LV. 05</span>
-                    </div>
-
-
-                    <div class="inventory-item">
-                        <div class="inventory-icon">+</div>
-
-                        <div>
-                            <h4>EXPERIMENTATION</h4>
-                            <p>Building things just to see what happens.</p>
-                        </div>
-
-                        <span class="item-level">LV. 04</span>
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <div class="skill-panel" id="personality">
-
-                <div class="personality-screen">
-
-                    <div class="personality-title">
-                        <span>CHARACTER PROFILE</span>
-                        <h3>PASSIVE ABILITIES</h3>
-                    </div>
-
-
-                    <div class="ability-grid">
-
-                        <div class="ability">
-                            <span class="ability__tag">PASSIVE</span>
-                            <h4>CURIOUS</h4>
-                            <p>
-                                Will probably ask why something works
-                                before accepting that it does.
-                            </p>
-                            <strong>+10 EXPLORATION</strong>
-                        </div>
-
-
-                        <div class="ability">
-                            <span class="ability__tag">PASSIVE</span>
-                            <h4>CAN'T LEAVE IT ALONE</h4>
-                            <p>
-                                Sees something that could be improved.
-                                Immediately starts thinking about it.
-                            </p>
-                            <strong>+20 OPTIMIZATION</strong>
-                        </div>
-
-
-                        <div class="ability">
-                            <span class="ability__tag">PASSIVE</span>
-                            <h4>TRIES WEIRD IDEAS</h4>
-                            <p>
-                                Sometimes the strange solution
-                                turns out to be the best one.
-                            </p>
-                            <strong>+15 CREATIVITY</strong>
-                        </div>
-
-
-                        <div class="ability">
-                            <span class="ability__tag rare">RARE</span>
-                            <h4>GOOD ENERGY</h4>
-                            <p>
-                                Likes working with people who are
-                                excited about what they're building.
-                            </p>
-                            <strong>+25 TEAMWORK</strong>
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
+      </div>
+
+      <!-- 3. SCHOOL -->
+      <div class="cs-page" id="page-school">
+        <div class="cs-timeline">
+          <div class="cs-event">
+            <span class="cs-event__date">2020 — 2024</span>
+            <h4>ICT &amp; BUSINESS</h4>
+            <p class="cs-event__where" data-i18n="cs.school.fontysName">@ FONTYS UNIVERSITY OF APPLIED SCIENCES</p>
+            <p data-i18n="cs.school.ict.text">During my studies at Fontys I learned through a project-based approach, working with real companies' business challenges. Through these projects I gained experience in programming, databases, business processes, and project management, while learning how to apply IT to solve practical problems.</p>
+            <div class="cs-tags"><b>Global Acting</b><b data-i18n="cs.tag.ai">Artificial Intelligence</b><b>Data Analytics</b></div>
+          </div>
+          <div class="cs-event">
+            <span class="cs-event__date">2023 — 2023</span>
+            <h4 data-i18n="cs.school.kea.title">DIGITAL PRODUCT DEVELOPMENT</h4>
+            <p class="cs-event__where">@ Copenhagen School of Design and Technology</p>
+            <p data-i18n="cs.school.kea.text">During my studies at KEA, I worked on several start-up projects, developing functional SaaS products. I applied design thinking, SaaS development, UI/UX design, and project management, while gaining experience in understanding why start-ups fail and how to turn ideas into viable products through collaboration with real start-ups in Copenhagen.</p>
+            <div class="cs-tags"><b>UX/UI Design</b><b data-i18n="cs.tag.startupMgmt">Start-up Management</b><b>Design Thinking</b></div>
+          </div>
+          <div class="cs-event">
+            <h4 data-i18n="cs.school.cert.title">CERTIFICATIONS</h4>
+            <p data-i18n="cs.school.cert.text">List certificates I obtained during my professional career.</p>
+            <div class="cs-tags"><b>Microsoft PL-300</b><b>Microsoft PL-500</b><b>SQLBI Mastering DAX</b></div>
+          </div>
         </div>
+      </div>
 
-    </div>
+      <!-- 4. SKILLS -->
+      <div class="cs-page" id="page-skills">
+        <div class="cs-skills">
+          <div class="cs-skillcol">
+            <h4 data-i18n="cs.skills.tech">💻 TECH</h4>
+            <div class="cs-skill"><span>Power Automate</span><div class="cs-bar"><i data-w="100"></i></div></div>
+            <div class="cs-skill"><span data-i18n="cs.skills.ai">Artificial Intelligence</span><div class="cs-bar"><i data-w="85"></i></div></div>
+            <div class="cs-skill"><span>Power BI</span><div class="cs-bar"><i data-w="95"></i></div></div>
+            <div class="cs-skill"><span>JSON</span><div class="cs-bar"><i data-w="85"></i></div></div>
+            <div class="cs-skill"><span>HTML / CSS / JS</span><div class="cs-bar"><i data-w="80"></i></div></div>
+          </div>
+          <div class="cs-skillcol">
+            <h4 data-i18n="cs.skills.business">💼 BUSINESS</h4>
+            <div class="cs-skill"><span data-i18n="cs.skills.processAuto">Process automation &amp; improvement</span><div class="cs-bar"><i data-w="95"></i></div></div>
+            <div class="cs-skill"><span data-i18n="cs.skills.bridging">Bridging business &amp; IT</span><div class="cs-bar"><i data-w="85"></i></div></div>
+            <div class="cs-skill"><span data-i18n="cs.skills.pm">Project management</span><div class="cs-bar"><i data-w="90"></i></div></div>
+            <div class="cs-skill"><span data-i18n="cs.skills.stakeholder">Stakeholder management</span><div class="cs-bar"><i data-w="80"></i></div></div>
+          </div>
+          <div class="cs-skillcol">
+            <h4 data-i18n="cs.skills.creative">🎨 CREATIVE</h4>
+            <div class="cs-skill"><span>UI / UX</span><div class="cs-bar"><i data-w="70"></i></div></div>
+            <div class="cs-skill"><span data-i18n="cs.skills.webdesign">Web design</span><div class="cs-bar"><i data-w="80"></i></div></div>
+            <div class="cs-skill"><span data-i18n="cs.skills.creativeApproach">Trying different, creative approaches</span><div class="cs-bar"><i data-w="100"></i></div></div>
+          </div>
+        </div>
+        <div class="cs-passives">
+          <span data-i18n="cs.passives.label">PASSIVES:</span>
+          <b data-i18n="cs.passives.curious">CURIOUS +20 INSPIRATION</b>
+          <b data-i18n="cs.passives.creative">CREATIVE +10 IDEAS</b>
+          <b class="rare" data-i18n="cs.passives.proactive">PROACTIVE +25 GETTING THINGS DONE</b>
+        </div>
+      </div>
 
-</section>
-    
+      <!-- 5. LANGUAGES -->
+      <div class="cs-page" id="page-languages">
+        <div class="cs-lang">
+          <div class="cs-lang__item">
+            <div class="cs-lang__flag">NL</div>
+            <div><h4 data-i18n="cs.lang.nl.name">DUTCH</h4><p data-i18n="cs.lang.nl.text">As my native language, I am fluent in both written and spoken Dutch.</p></div>
+            <span class="cs-lang__lvl" data-i18n="cs.lang.nl.lvl">NATIVE</span>
+            <div class="cs-pips" data-pips="5"></div>
+          </div>
+          <div class="cs-lang__item">
+            <div class="cs-lang__flag">EN</div>
+            <div><h4 data-i18n="cs.lang.en.name">ENGLISH</h4><p data-i18n="cs.lang.en.text">Having spoken English my whole life, I am fluent in both written and spoken English.</p></div>
+            <span class="cs-lang__lvl" data-i18n="cs.lang.en.lvl">FLUENT</span>
+            <div class="cs-pips" data-pips="5"></div>
+          </div>
+          <div class="cs-lang__item">
+            <div class="cs-lang__flag">&lt;/&gt;</div>
+            <div><h4 data-i18n="cs.lang.code.name">CODE</h4><p data-i18n="cs.lang.code.text">Proficient in JavaScript, HTML, CSS, Python, R, DAX &amp; SQL.</p></div>
+            <span class="cs-lang__lvl" data-i18n="cs.lang.code.lvl">LV. 4</span>
+            <div class="cs-pips" data-pips="4"></div>
+          </div>
+          <div class="cs-lang__item">
+            <div class="cs-lang__flag">??</div>
+            <div><h4 data-i18n="cs.lang.es.name">SPANISH</h4><p data-i18n="cs.lang.es.text">Currently learning Spanish! (A2)</p></div>
+            <span class="cs-lang__lvl" data-i18n="cs.lang.es.lvl">LOCKED</span>
+            <div class="cs-pips" data-pips="2"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6. SIDE QUESTS -->
+      <div class="cs-page" id="page-sidequests">
+        <div class="cs-quests">
+
+          <div class="cs-sq done">
+            <span class="cs-sq__check"></span>
+            <div class="cs-sq__text">
+              <h4 data-i18n="cs.sq.portfolio.title">CREATE A PERSONAL PORTFOLIO</h4>
+              <p data-i18n="cs.sq.portfolio.text">Learn new programming skills to create a space that reflects my creativity and professional abilities.</p>
+            </div>
+            <div class="cs-sq__side">
+              <b>+1500 XP</b>
+            </div>
+          </div>
+
+          <div class="cs-sq">
+            <span class="cs-sq__check"></span>
+            <div class="cs-sq__text">
+              <h4 data-i18n="cs.sq.golf.title">BECOME A SCRATCH GOLFER</h4>
+              <p data-i18n="cs.sq.golf.text">Chasing those “perfect” golf rounds for a couple of years now. The spark hasn't faded yet.</p>
+            </div>
+            <div class="cs-sq__side">
+              <b>+1000 XP</b>
+              <div class="cs-meter" data-start="54" data-current="10.3" data-goal="0" data-decimals="1" data-segments="20">
+                <div class="cs-meter__track"></div>
+                <div class="cs-meter__nums">
+                  <span><em data-i18n="cs.meter.start">START</em> <strong class="cs-meter__start"></strong></span>
+                  <span class="cs-meter__nowwrap"><em data-i18n="cs.meter.hcp">HCP</em> <strong class="cs-meter__now"></strong></span>
+                  <span><em data-i18n="cs.meter.goal">GOAL</em> <strong class="cs-meter__goal"></strong></span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="cs-sq">
+            <span class="cs-sq__check"></span>
+            <div class="cs-sq__text">
+              <h4 data-i18n="cs.sq.music.title">RELEASE A MUSIC PROJECT</h4>
+              <p data-i18n="cs.sq.music.text">Turn a collection of ideas into something tangible people can engage with.</p>
+            </div>
+            <div class="cs-sq__side">
+              <b>+850 XP</b>
+            </div>
+          </div>
+
+          <div class="cs-sq">
+            <span class="cs-sq__check"></span>
+            <div class="cs-sq__text">
+              <h4 data-i18n="cs.sq.travel.title">TRAVEL THE WORLD</h4>
+              <p data-i18n="cs.sq.travel.text">I love engaging with different cultures and meeting new people!</p>
+            </div>
+            <div class="cs-sq__side">
+              <b>+1200 XP</b>
+              <div class="cs-meter" data-start="0" data-current="5" data-goal="7" data-decimals="0" data-segments="7">
+                <div class="cs-meter__track"></div>
+                <div class="cs-meter__nums">
+                  <span><em data-i18n="cs.meter.start">START</em> <strong class="cs-meter__start"></strong></span>
+                  <span class="cs-meter__nowwrap"><em data-i18n="cs.meter.visited">VISITED</em> <strong class="cs-meter__now"></strong></span>
+                  <span><em data-i18n="cs.meter.goal">GOAL</em> <strong class="cs-meter__goal"></strong></span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="cs-sq">
+            <span class="cs-sq__check"></span>
+            <div class="cs-sq__text">
+              <h4 data-i18n="cs.sq.abroad.title">WORK ABROAD</h4>
+              <p data-i18n="cs.sq.abroad.text">Take my skills somewhere new and experience working in another country.</p>
+            </div>
+            <div class="cs-sq__side">
+              <b>+1000 XP</b>
+            </div>
+          </div>
+
+        </div>
+      </div>
     
 
 
@@ -717,5 +495,6 @@
     <script src="translations.js"></script>
     <script src="main.js"></script>
     <script src="flag-hiker.js"></script>
+    <script src="mobile.js"></script>
 </body>
 </html>

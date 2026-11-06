@@ -1,0 +1,351 @@
+/* ============================================================
+   MOBILE.CSS  (phones + tablets)
+   Load AFTER main.css, nes.css and flag-hiker.css.
+
+   Tiers:
+     (hover: none)          touch behaviour (no sticky hover, tap feedback)
+     max-width: 1180px      "compact" layout: tablets AND phones
+     max-width: 800px       phone-only refinements
+   Desktop (> 1180px) is untouched.
+   ============================================================ */
+
+
+/* ============================================================
+   0. DEFAULT (desktop): language button hidden
+   ============================================================ */
+
+.m-lang {
+    display: none;
+}
+
+
+/* ============================================================
+   1. TOUCH: no sticky hover, tap feedback instead
+   ============================================================ */
+
+@media (hover: none) {
+
+    html { -webkit-tap-highlight-color: transparent; }
+
+    button, a, .scroll-carousel__card, .cs-tab, .cs-dialog {
+        touch-action: manipulation;
+    }
+
+    .scroll-carousel__card:hover {
+        transform: none;
+        box-shadow: 10px 10px 0 #000;
+    }
+    .scroll-carousel__card:hover img {
+        transform: none;
+        filter: saturate(0.9) contrast(1.05);
+    }
+    .scroll-carousel__card:hover .scroll-carousel__card-title { transform: none; }
+
+    .cs-box:hover, .cs-event:hover, .cs-sq:hover, .cs-lang__item:hover { transform: none; }
+
+    .cs-tab:not(.active):hover { width: 50px; background: #f7eaf1; }
+
+    nav ul li a:hover { color: #FF131E; }
+    nav ul li a:hover::after { transform: scaleX(0); }
+
+    .project-gallery-arrow:hover,
+    .project-gallery-arrow--next:hover { transform: translateY(-50%); box-shadow: 5px 5px 0 #1a1a1a; }
+    .project-detail__close:hover { transform: none; box-shadow: 4px 4px 0 #1a1a1a; }
+
+    /* tap feedback (pixel "press") */
+    .scroll-carousel__card:active { transform: translate(4px, 4px); box-shadow: 4px 4px 0 #000; }
+    .cs-tab:active, .project-detail__close:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 #1a1a1a; }
+    .project-gallery-arrow:active { transform: translate(2px, -50%); box-shadow: 2px 2px 0 #1a1a1a; }
+    .project-gallery-arrow--next:active { transform: translate(-2px, -50%); }
+    nav ul li a:active::after { transform: scaleX(1); }
+
+    /* the hiker is mouse-only: replaced by the .m-lang button */
+    .fh-widget { display: none !important; }
+
+    .m-lang {
+        display: flex;
+        position: fixed;
+        right: max(12px, env(safe-area-inset-right));
+        bottom: max(12px, env(safe-area-inset-bottom));
+        z-index: 50;
+        padding: 0;
+        border: 4px solid #1a1a1a;
+        background: #f7eaf1;
+        box-shadow: 3px 3px 0 #1a1a1a;
+        cursor: pointer;
+        opacity: 0;
+        transform: translateY(24px);
+        transition: opacity 0.3s ease, transform 0.3s steps(4);
+    }
+    .m-lang.show { opacity: 1; transform: none; }
+    .m-lang:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 #1a1a1a; }
+    .m-lang span {
+        padding: 9px 10px;
+        font-family: 'retro', monospace;
+        font-size: 10px;
+        color: #1a1a1a;
+    }
+    .m-lang span.on { background: #d94f7d; color: #fff; }
+}
+
+
+/* ============================================================
+   2. COMPACT LAYOUT: tablets + phones (<= 1180px)
+   ============================================================ */
+
+@media (max-width: 1180px) {
+
+    html, body { max-width: 100%; overflow-x: clip; }
+
+    /* expensive on mobile GPUs */
+    body::before, body::after { display: none; }
+    #grained-background::before { animation: none !important; }
+
+    /* ---------- header ---------- */
+    header { padding: 14px 20px; }
+    .logo img { margin-left: 8px; width: 64px; }
+    nav ul {
+        gap: clamp(6px, 2.5vw, 36px);
+        margin: 0 8px 0 0;
+    }
+    nav ul li a {
+        font-size: clamp(11px, 1.9vw, 18px);
+        padding: 8px clamp(6px, 1.2vw, 14px);
+    }
+    nav ul li a::after {
+        left: clamp(6px, 1.2vw, 14px);
+        width: calc(100% - 2 * clamp(6px, 1.2vw, 14px));
+        height: 4px;
+    }
+
+    /* ---------- project carousel ---------- */
+    .scroll-carousel__sticky { padding-left: 60px; padding-right: 60px; }
+    .scroll-carousel__cards { gap: 32px; }
+    .scroll-carousel__card {
+        flex: 0 0 320px;
+        width: 320px;
+        height: 460px;
+    }
+    .scroll-carousel__card-title { font-size: 22px; }
+
+    /* ---------- project overlay: stacked, scrolls as one piece ---------- */
+    .project-overlay { padding: 16px; }
+
+    .project-detail {
+        height: calc(100vh - 32px);
+        max-height: calc(100vh - 32px);
+        padding: 20px;
+        box-shadow: 8px 8px 0 #000;
+    }
+    .project-detail__top { margin-bottom: 14px; padding-bottom: 12px; padding-right: 56px; }
+    .project-detail__close { top: 6px; right: 10px; width: 42px; height: 42px; font-size: 26px; }
+
+    .project-detail__main {
+        display: block;
+        flex: 1;
+        min-height: 0;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        -webkit-overflow-scrolling: touch;
+        padding: 0 10px 10px 0;
+    }
+    .project-detail__visual { display: block; height: auto; min-height: 0; margin-bottom: 24px; }
+    .project-detail__image {
+        height: clamp(240px, 46vw, 440px);
+        min-height: 0;
+        flex: none;
+        border-width: 5px;
+        box-shadow: 6px 6px 0 #1a1a1a;
+    }
+    .project-gallery-arrow { width: 44px; height: 44px; border-width: 4px; font-size: 15px; }
+    .project-gallery-arrow--prev { left: 10px; }
+    .project-gallery-arrow--next { right: 10px; }
+    .detail-image-label { left: 10px; bottom: 10px; max-width: calc(100% - 20px); white-space: normal; }
+
+    .project-detail__info { display: block; overflow: visible; }
+    .project-detail__info h2 { font-size: clamp(20px, 5vw, 32px); }
+    .project-detail__meta { flex-wrap: wrap; margin-bottom: 18px; }
+    .project-description { overflow: visible; padding: 16px; margin-bottom: 18px; }
+    .project-description p { overflow: visible; padding-right: 0; font-size: 17px; }
+
+    /* ---------- character screen ----------
+       Fixed height like on desktop; the pages scroll inside. */
+    .skills {
+        min-height: 100vh;
+        padding: 80px 4vw 70px;
+    }
+    .cs {
+        height: min(700px, calc(100vh - 150px));
+        height: min(700px, calc(100svh - 150px));
+        min-height: 420px;
+        box-shadow: 6px 6px 0 #1a1a1a;
+        border-width: 5px;
+    }
+    .cs__screen { padding: 16px 14px; overflow: hidden; }
+    .cs-page {
+        height: 100%;
+        max-height: none;
+        overflow-y: auto;
+        overscroll-behavior-y: auto;
+        -webkit-overflow-scrolling: touch;
+        padding-right: 8px;
+    }
+
+    .cs__menu { padding: 10px 8px; gap: 6px; }
+
+    .cs-dialog p { font-size: clamp(17px, 2.4vw, 20px); min-height: 110px; }
+
+    .cs-grid { grid-template-columns: 1fr 1fr; }
+    .cs-box--wide { grid-column: 1 / -1; }
+
+    .cs-skills { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+
+    .cs-sq { grid-template-columns: 56px minmax(0, 1fr) 220px; gap: 16px; }
+}
+
+
+/* ============================================================
+   2b. HERO + INTRO: tablets, phones AND any "squarish" window
+   (4:3 and taller, e.g. iPad Pro 1366x1024 or a resized browser).
+   Sizes follow the smaller of width/height so nothing gets
+   oversized. 16:10 / 16:9 desktops are not affected.
+   ============================================================ */
+
+@media (max-width: 1180px), (max-aspect-ratio: 3/2) {
+
+    /* 17em is a fixed desktop size.
+       (mobile.js scales the wave mask with this font size.) */
+    .content h2 { font-size: min(14vw, 24vh); }
+
+    .next-section {
+        height: auto;
+        min-height: 100vh;
+        padding: clamp(90px, 14vh, 150px) 7vw 40px;
+    }
+    .intro_text--container p {
+        font-size: clamp(20px, min(3vw, 4.6vh), 34px);
+        line-height: 1.5;
+        margin-bottom: 16px;
+    }
+    .retro-font, .retro-font .word { font-size: clamp(14px, min(2.4vw, 3.8vh), 28px); }
+}
+
+
+/* ============================================================
+   3. PHONES ONLY (<= 800px)
+   ============================================================ */
+
+@media (max-width: 800px) {
+
+    header { padding: 10px 12px; }
+    .logo img { margin-left: 0; width: 46px; }
+    nav ul { gap: 0; margin-right: 0; }
+    nav ul li a { font-size: 11px; padding: 8px 7px; }
+    nav ul li a::after { left: 7px; width: calc(100% - 14px); }
+
+    .content h2 { font-size: min(15vw, 26vh); }
+    .next-section { padding: 120px 24px 60px; }
+    .intro_text--container p { font-size: 22px; line-height: 1.55; margin-bottom: 20px; }
+    .retro-font, .retro-font .word { font-size: 15px; }
+
+    .scroll-carousel__sticky { padding-left: 24px; padding-right: 24px; }
+    .scroll-carousel__cards { gap: 28px; }
+    .scroll-carousel__card { flex: 0 0 280px; width: 280px; height: 420px; }
+    .scroll-carousel__card-title { font-size: 19px; left: 12px; right: 12px; bottom: 65px; padding: 12px; }
+
+    .project-overlay { padding: 12px; }
+    .project-detail {
+        height: calc(100vh - 24px);
+        max-height: calc(100vh - 24px);
+        padding: 14px;
+        border-width: 5px;
+        box-shadow: 6px 6px 0 #000;
+    }
+    .project-detail__top { padding-right: 46px; border-bottom-width: 4px; }
+    .project-detail__close { top: 4px; right: 6px; width: 38px; height: 38px; font-size: 24px; }
+    .project-detail__image { height: 240px; }
+    .project-gallery-arrow { width: 40px; height: 40px; font-size: 14px; }
+    .project-gallery-arrow--prev { left: 8px; }
+    .project-gallery-arrow--next { right: 8px; }
+    .detail-image-label { left: 8px; bottom: 8px; font-size: 7px; }
+    .project-description { padding: 14px; }
+    .project-description p { font-size: 16px; }
+
+    /* character screen */
+    .skills { padding: 80px 14px 70px; }
+    .cs__screen { padding: 14px 12px; }
+    .cs__menu { justify-content: space-between; }
+    .cs-tab, .cs-tab:hover, .cs-tab.active {
+        width: 46px; height: 46px; flex: 1 1 0; max-width: 52px;
+    }
+    .cs-tab__icon { flex: 1 1 auto; }
+
+    .cs-char { grid-template-columns: 1fr; gap: 18px; height: auto; }
+    .cs-char__left {
+        display: grid;
+        grid-template-columns: 110px 1fr;
+        column-gap: 16px;
+        align-items: end;
+    }
+    .cs-photo { grid-row: 1 / span 2; max-width: none; border-width: 5px; box-shadow: 5px 5px 0 #1a1a1a; }
+    .cs-name { margin: 0; font-size: 18px; }
+    .cs-class { margin: 4px 0 0; align-self: start; font-size: 12px; }
+    .cs-stats { grid-column: 1 / -1; margin-top: 16px; }
+    .cs-dialog { margin: 18px 0 16px; padding: 24px 18px 20px; }
+    .cs-dialog p { font-size: 18px; min-height: 130px; }
+    .cs-grid { grid-template-columns: 1fr; }
+
+    .cs-timeline { padding-left: 26px; }
+    .cs-timeline::before { left: 4px; width: 5px; }
+    .cs-event { padding: 12px 14px; }
+    .cs-event::before { left: -27px; top: 20px; width: 14px; height: 14px; border-width: 3px; }
+    .cs-event h4 { font-size: 12px; line-height: 1.5; }
+    .cs-event p:not(.cs-event__where) { font-size: 15px; }
+
+    .cs-skills { grid-template-columns: 1fr; }
+
+    .cs-lang__item { grid-template-columns: 50px 1fr; gap: 12px; padding: 10px 12px; }
+    .cs-lang__lvl, .cs-pips { grid-column: 2; }
+
+    .cs-sq { grid-template-columns: 48px minmax(0, 1fr); gap: 14px; padding: 12px; }
+    .cs-sq__check { width: 46px; height: 46px; }
+    .cs-sq__side { grid-column: 1 / -1; align-items: stretch; }
+    .cs-sq__side b { align-self: flex-end; }
+}
+
+
+/* ============================================================
+   4. SMALL PHONES
+   ============================================================ */
+
+@media (max-width: 380px) {
+    nav ul li a { font-size: 10px; padding: 8px 5px; }
+    .intro_text--container p { font-size: 19px; }
+    .cs-char__left { grid-template-columns: 90px 1fr; }
+}
+
+
+/* ============================================================
+   5. LANDSCAPE PHONES (very little height)
+   ============================================================ */
+
+@media (max-width: 950px) and (max-height: 500px) and (orientation: landscape) {
+    .next-section { padding-top: 90px; }
+    .skills { padding: 70px 4vw 50px; }
+    .cs { height: max(300px, calc(100vh - 120px)); min-height: 0; }
+    .project-detail__image { height: 180px; }
+}
+
+
+/* ============================================================
+   6. REDUCED MOTION
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    #grained-background::before { animation: none !important; }
+}

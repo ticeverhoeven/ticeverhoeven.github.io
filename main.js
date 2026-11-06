@@ -57,6 +57,8 @@ function applyTranslations(language) {
         updateProjectText(activeProject);
         showProjectImage(activeImage);
     }
+        // Let other parts (like the character dialogue) know the language changed.
+    window.dispatchEvent(new Event('translationsapplied'));
 }
 
 // Listen for the hiker widget's language selection.
@@ -82,32 +84,37 @@ window.addEventListener('load', () => {
                 loaderWrapper.style.display = 'none';
             }, 1000);
         }
-    }, 3000);
+    }, 2150);
 
 
     // ----------------------------
     // Loading animation letters
     // ----------------------------
 
-    const letters = document.querySelectorAll('#loading-animation p');
+  
+    // ----------------------------
+    // Loading animation images
+    // ----------------------------
+
+    const logos = document.querySelectorAll('#loading-animation img');
 
     let currentIndex = 0;
 
-    function showNextLetter() {
-        if (!letters.length) return;
+    function showNextLogo() {
+        if (!logos.length) return;
 
-        letters.forEach(letter => {
-            letter.style.display = 'none';
+        logos.forEach(logo => {
+            logo.style.display = 'none';
         });
 
-        letters[currentIndex].style.display = 'block';
+        logos[currentIndex].style.display = 'block';
 
-        currentIndex = (currentIndex + 1) % letters.length;
+        currentIndex = (currentIndex + 1) % logos.length;
 
-        setTimeout(showNextLetter, 300);
+        setTimeout(showNextLogo, 360);
     }
 
-    showNextLetter();
+    showNextLogo();
 
 
     
@@ -306,8 +313,8 @@ function setupTextAnimations() {
 
                 trigger: paragraph,
 
-                start: 'top 70%',
-                end: 'top 55%',
+                start: 'top 75%',
+                end: 'top 60%',
 
                 scrub: 0.3
 
@@ -345,8 +352,8 @@ function setupTextAnimations() {
 
                     trigger: button,
 
-                    start: 'top 70%',
-                    end: 'top 60%',
+                    start: 'top 83%',
+                    end: 'top 73%',
 
                     scrub: 0.3
 
@@ -520,7 +527,7 @@ const cards = [
         'Developed and implemented an end-to-end order processing solution that transforms a previously manual workflow into an automated process, extracting order data from PDF, XML and Excel documents, structuring it for downstream processing, and enabling fully automated execution through a zero-click mode. The solution demonstrated the potential to automate approximately 37% of manually processed orders, equivalent to an estimated 350 orders per month, significantly reducing manual data entry and streamlining order processing.',
 
     technologies: [
-        'Microsoft Power Automate',
+        'Power Automate',
         'AI (IDP)',
         'HTML/CSS/JS',
         'SFTP',
@@ -1583,10 +1590,6 @@ function createCards() {
                 PROJECT ${projectNumber}
             </div>
 
-            <div class="card-status">
-                ${text.status}
-            </div>
-
             <div class="scroll-carousel__card-title">
                 ${text.title}
             </div>
@@ -1621,13 +1624,31 @@ function setupHorizontalScroll() {
     if (!container || !cardsContainer) return;
 
 
+    // How far the cards have to move so the LAST card ends up
+    // exactly in the middle of the screen (works for any card/screen size).
     function getDistance() {
 
+        const last = cardsContainer.lastElementChild;
+
+        if (!last) return 0;
+
+        const currentX = gsap.getProperty(cardsContainer, 'x') || 0;
+        const rect = last.getBoundingClientRect();
+
+        // centre of the last card when the carousel is at x = 0
+        const centre = rect.left - currentX + rect.width / 2;
+
+        return Math.max(0, centre - window.innerWidth / 2);
+
+    }
+
+
+    // Scroll length of the horizontal part (a bit faster than 1:1)
+    function getLength() {
+
         return Math.max(
-            0,
-            cardsContainer.scrollWidth -
-            window.innerWidth +
-            240
+            window.innerHeight * 0.6,
+            getDistance() * 0.85
         );
 
     }
@@ -1635,12 +1656,17 @@ function setupHorizontalScroll() {
 
     function getStartPosition() {
 
+        // Make the section exactly as tall as it needs to be:
+        // one screen (sticky) + the horizontal scroll length.
+        container.style.height =
+            (window.innerHeight + getLength()) + 'px';
+
         // Where the black section actually starts
         const sectionTop =
             container.getBoundingClientRect().top +
             window.scrollY;
 
-        // Wait exactly 100vh after entering the black section
+        // Compensates for the hero pin spacing (as before)
         return sectionTop + window.innerHeight;
 
     }
@@ -1648,9 +1674,7 @@ function setupHorizontalScroll() {
 
     function getEndPosition() {
 
-        // Horizontal scrolling starts after 100vh
-        // and continues for the remaining 200vh.
-        return getStartPosition() + (window.innerHeight * 2);
+        return getStartPosition() + getLength();
 
     }
 
@@ -1665,10 +1689,8 @@ function setupHorizontalScroll() {
 
             trigger: container,
 
-            // EXACTLY 100vh after the black section starts
             start: () => getStartPosition(),
 
-            // EXACTLY at the bottom of the 300vh section
             end: () => getEndPosition(),
 
             scrub: true,
@@ -1710,36 +1732,224 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
 // SKILLS TABS
 // ============================================================
 
-const skillTabs = document.querySelectorAll('.skill-tab');
-const skillPanels = document.querySelectorAll('.skill-panel');
+// ============================================================
+// CHARACTER SCREEN  (replaces the old "SKILLS TABS" block)
+// ============================================================
 
-skillTabs.forEach(tab => {
+(function () {
+    const tabs = document.querySelectorAll('.cs-tab');
+    const pages = document.querySelectorAll('.cs-page');
+    const typeEl = document.getElementById('typeText');
+    const nextBtn = document.getElementById('dlgNext');
 
-    tab.addEventListener('click', () => {
+        // Inner page scrolling that never traps the page scroll
+    let lastPageScroll = 0;
+    lenis.on('scroll', () => { lastPageScroll = performance.now(); });
 
-        const target = tab.dataset.tab;
+    pages.forEach(p => {
+        let lastInnerWheel = 0;
 
-        // Remove active state
-        skillTabs.forEach(item => {
-            item.classList.remove('active');
-        });
+        p.addEventListener('wheel', e => {
+            if (!p.classList.contains('active')) return;
 
-        skillPanels.forEach(panel => {
-            panel.classList.remove('active');
-        });
+            // Page doesn't overflow: nothing to scroll inside
+            if (p.scrollHeight <= p.clientHeight + 1) return;
 
-        // Activate clicked tab
-        tab.classList.add('active');
+            const now = performance.now();
+            const dir = e.deltaY > 0 ? 1 : -1;
+            const atTop = p.scrollTop <= 0;
+            const atBottom = p.scrollTop + p.clientHeight >= p.scrollHeight - 1;
+            const atEdge = (dir < 0 && atTop) || (dir > 0 && atBottom);
 
-        const panel = document.getElementById(target);
+            // The main page is gliding in the same direction as the wheel
+            // (e.g. you scrolled down into the section): let it keep going.
+            // If you reversed direction, the inner list gets priority.
+            const pageGliding = now - lastPageScroll < 250 && lenis.direction === dir;
+            if (pageGliding) return;
 
-        if (panel) {
-            panel.classList.add('active');
-        }
+            if (atEdge) {
+                // Hand over to the main page, but only after a short pause,
+                // so trackpad momentum doesn't carry you out of the list.
+                if (now - lastInnerWheel > 200) return;
+                e.preventDefault();
+                e.stopPropagation();
+                lastInnerWheel = now; // keep absorbing until momentum dies
+                return;
+            }
 
+            // Otherwise scroll the inner list and keep Lenis out of it
+            e.preventDefault();
+            e.stopPropagation();
+            lastInnerWheel = now;
+            p.scrollTop += e.deltaY;
+        }, { passive: false });
     });
 
-});
+    // ---------- DIALOGUE LINES (edit these!) ----------
+    const getLines = () =>
+        translations[currentLanguage]?.dialogue ?? translations.en.dialogue;
+
+    // ---------- PIXEL ICONS (1 = filled pixel, 10x10) ----------
+    const ICONS = {
+        char:  ['..........','...1111...','..111111..','..111111..','...1111...','..........','.11111111.','1111111111','1111111111','1111111111'],
+        sword: ['........11','.......111','......111.','.....111..','1...111...','11.111....','.1111.....','..11......','.1111.....','11..11....'],
+        scroll:['.11111111.','1111111111','1.........1','1.111111.1','1.........1','1.111111.1','1.........1','1.1111...1','1111111111','.11111111.'],
+        star:  ['....11....','....11....','...1111...','1111111111','.11111111.','..111111..','..111111..','.111..111.','.11....11.','.1......1.'],
+        chat:  ['.11111111.','1111111111','1111111111','1111111111','1111111111','1111111111','.11111111.','..111.....','..11......','..1.......'],
+        map:   ['.11......1','.1111111..','.1.....1..','.1.11..1..','.1.11..1..','.1.....1..','.1111111..','.1........','.1........','.1........'],
+        hourglass: ['1111111111','.11....11.','..11..11..','...1111...','....11....','....11....','...1111...','..111111..','.11111111.','1111111111'],
+        check: ['..........','.........1','........11','1......11.','11....11..','.11..11...','..1111....','...11.....','..........','..........']
+    };
+
+    function pixelSVG(rows) {
+        let r = '';
+        rows.forEach((row, y) => [...row].forEach((ch, x) => {
+            if (ch === '1') r += `<rect x="${x}" y="${y}" width="1" height="1"/>`;
+        }));
+        return `<svg viewBox="0 0 10 10" fill="#1a1a1a" aria-hidden="true">${r}</svg>`;
+    }
+
+    tabs.forEach(t => {
+        const rows = ICONS[t.dataset.icon];
+        if (rows) t.querySelector('.cs-tab__icon').innerHTML = pixelSVG(rows);
+    });
+
+    // Pixel icon on every side quest: check if done, hourglass if not
+    document.querySelectorAll('.cs-sq').forEach(sq => {
+        const icon = sq.classList.contains('done') ? ICONS.check : ICONS.hourglass;
+        sq.querySelector('.cs-sq__check').innerHTML = pixelSVG(icon);
+    });
+
+    // Language pips
+    document.querySelectorAll('.cs-pips').forEach(el => {
+        const on = parseInt(el.dataset.pips, 10) || 0;
+        el.innerHTML = Array.from({ length: 5 }, (_, i) => `<i class="${i < on ? 'on' : ''}"></i>`).join('');
+    });
+
+    // Bars fill from 0
+    function fillBars(page) {
+        const bars = page.querySelectorAll('.cs-bar i');
+        bars.forEach(b => (b.style.width = '0'));
+        requestAnimationFrame(() => requestAnimationFrame(() =>
+            bars.forEach(b => (b.style.width = b.dataset.w + '%'))));
+    }
+
+    // Quest meters: segments light up and the number counts to its current value
+function fillMeters(page) {
+    page.querySelectorAll('.cs-meter').forEach(meter => {
+        const start   = parseFloat(meter.dataset.start);
+        const current = parseFloat(meter.dataset.current);
+        const goal    = parseFloat(meter.dataset.goal);
+        const dec     = parseInt(meter.dataset.decimals, 10) || 0;
+        const total   = parseInt(meter.dataset.segments, 10) || 10;
+
+        const track = meter.querySelector('.cs-meter__track');
+        const now   = meter.querySelector('.cs-meter__now');
+
+        meter.querySelector('.cs-meter__start').textContent = start.toFixed(dec);
+        meter.querySelector('.cs-meter__goal').textContent  = goal.toFixed(dec);
+
+        (meter._timers || []).forEach(clearTimeout);
+        meter._timers = [];
+
+        const frac = Math.min(1, Math.max(0, (current - start) / (goal - start)));
+        const lit  = Math.round(frac * total);
+
+        track.innerHTML = Array.from({ length: total }, () => '<i></i>').join('');
+        meter.classList.toggle('complete', current === goal);
+
+        const segs = [...track.children];
+        now.textContent = (lit === 0 ? current : start).toFixed(dec);
+
+        for (let i = 0; i < lit; i++) {
+            meter._timers.push(setTimeout(() => {
+                segs[i].classList.add('on');
+                const value = i === lit - 1
+                    ? current
+                    : start + ((i + 1) / lit) * (current - start);
+                now.textContent = value.toFixed(dec);
+            }, 150 + i * 70));
+        }
+    });
+}
+
+    // ---------- DIALOGUE ENGINE ----------
+    let lineIndex = 0, typing = false, timer = null;
+
+     function typeLine() {
+        if (!typeEl) return;
+        clearInterval(timer);
+        const text = getLines()[lineIndex];
+        let i = 0;
+        typing = true;
+        typeEl.textContent = '';
+        nextBtn.classList.remove('end');
+        nextBtn.textContent = '▼';
+        timer = setInterval(() => {
+            typeEl.textContent = text.slice(0, ++i);
+            if (i >= text.length) finishLine();
+        }, 26);
+    }
+
+    function finishLine() {
+        clearInterval(timer);
+        typing = false;
+        const lines = getLines();
+        typeEl.textContent = lines[lineIndex];
+        const last = lineIndex === lines.length - 1;
+        nextBtn.classList.toggle('end', last);
+    }
+
+    function advance() {
+        if (typing) return finishLine();
+        if (lineIndex >= getLines().length - 1) return;
+        lineIndex++;
+        typeLine();
+    }
+
+    nextBtn?.addEventListener('click', advance);
+    document.querySelector('.cs-dialog')?.addEventListener('click', e => {
+        if (e.target !== nextBtn) advance();
+    });
+
+    // When the language switches, show the current line in the new language
+    window.addEventListener('translationsapplied', () => {
+        if (typeEl && typeEl.textContent) finishLine();
+    });
+
+    // ---------- PAGES ----------
+    function openPage(name) {
+        tabs.forEach(t => t.classList.toggle('active', t.dataset.page === name));
+        pages.forEach(p => p.classList.toggle('active', p.id === 'page-' + name));
+        const page = document.getElementById('page-' + name);
+        if (!page) return;
+        page.scrollTop = 0;
+        fillBars(page);
+        fillMeters(page); 
+        if (name === 'character') { lineIndex = 0; typeLine(); }
+    }
+
+    tabs.forEach(tab => tab.addEventListener('click', () => openPage(tab.dataset.page)));
+
+    // Left / right arrow keys move between pages while a tab has focus
+    document.querySelector('.cs__menu')?.addEventListener('keydown', e => {
+        if (!['ArrowRight', 'ArrowLeft'].includes(e.key)) return;
+        const list = [...tabs];
+        const cur = list.findIndex(t => t.classList.contains('active'));
+        const next = (cur + (e.key === 'ArrowRight' ? 1 : -1) + list.length) % list.length;
+        list[next].focus();
+        openPage(list[next].dataset.page);
+        e.preventDefault();
+    });
+
+    // Start when the section scrolls into view
+    const section = document.getElementById('skills');
+    if (section) {
+        new IntersectionObserver((entries, obs) => {
+            if (entries[0].isIntersecting) { openPage('character'); obs.disconnect(); }
+        }, { threshold: 0.4 }).observe(section);
+    }
+})();
 
 
 // ============================================================
@@ -1758,3 +1968,27 @@ performanceElements.forEach(element => {
     element.style.willChange = 'transform';
 
 });
+
+
+// ============================================================
+// LAST SECTION: white navbar
+// As soon as the top of the screen reaches the pink section.
+// ============================================================
+
+(function () {
+    const header = document.querySelector('header');
+    const lastSection = document.getElementById('skills');
+
+    function update() {
+        if (!header || !lastSection) return;
+
+        const top = lastSection.getBoundingClientRect().top;
+
+        header.classList.toggle('nav-light', top <= header.offsetHeight * 0.5);
+    }
+
+    lenis.on('scroll', update);
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    window.addEventListener('load', update);
+})();

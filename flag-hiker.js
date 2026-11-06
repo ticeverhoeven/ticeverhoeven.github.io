@@ -201,11 +201,20 @@ function hideHiker() {
   });
 }
 
+function isAtBottom() {
+  const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+  return maxScroll - Math.min(window.scrollY, maxScroll) <= 5;
+}
+
 window.addEventListener('scroll', () => {
   const y = window.scrollY;
   const delta = y - lastY;
 
-  if (delta > 1) {
+  if (isAtBottom()) {
+    // Bottom of the page: always show the hiker, never hide it
+    direction = 'down';
+    showHiker();
+  } else if (delta > 1) {
     direction = 'down';
     hideHiker();
   } else if (delta < -1) {
@@ -215,6 +224,7 @@ window.addEventListener('scroll', () => {
 
   lastY = y;
 }, { passive: true });
+
 
 // Pop up on initial page load, after the loader animation.
 function initialPopUp() {
