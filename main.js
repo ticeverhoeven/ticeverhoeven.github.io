@@ -2023,3 +2023,74 @@ performanceElements.forEach(element => {
     window.addEventListener('resize', update);
     window.addEventListener('load', update);
 })();
+
+
+// ============================================================
+// CONTACT POP-UP
+// ============================================================
+
+(function () {
+    const overlay = document.getElementById('contactOverlay');
+    const win = document.getElementById('contactWindow');
+    const closeBtn = document.getElementById('closeContact');
+    const triggers = document.querySelectorAll('a[href="#contact"]');
+
+    if (!overlay || !win || !closeBtn) return;
+
+    let lastFocused = null;
+
+    function openContact() {
+        lastFocused = document.activeElement;
+        overlay.classList.add('is-open');
+        overlay.setAttribute('aria-hidden', 'false');
+        if (typeof lenis !== 'undefined') lenis.stop();
+        win.focus({ preventScroll: true });
+    }
+
+    function closeContact() {
+        if (!overlay.classList.contains('is-open')) return;
+        overlay.classList.remove('is-open');
+        overlay.setAttribute('aria-hidden', 'true');
+        if (typeof lenis !== 'undefined') lenis.start();
+        if (lastFocused && lastFocused.focus) lastFocused.focus({ preventScroll: true });
+    }
+
+    triggers.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            openContact();
+        });
+    });
+
+    closeBtn.addEventListener('click', closeContact);
+
+    // click on the dark backdrop closes it
+    overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) closeContact();
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (!overlay.classList.contains('is-open')) return;
+
+        if (e.key === 'Escape') {
+            closeContact();
+            return;
+        }
+
+        // keep Tab focus inside the pop-up
+        if (e.key === 'Tab') {
+            const items = win.querySelectorAll('a[href], button:not([disabled])');
+            if (!items.length) return;
+            const first = items[0];
+            const last = items[items.length - 1];
+
+            if (e.shiftKey && (document.activeElement === first || document.activeElement === win)) {
+                e.preventDefault();
+                last.focus();
+            } else if (!e.shiftKey && document.activeElement === last) {
+                e.preventDefault();
+                first.focus();
+            }
+        }
+    });
+})();
