@@ -51,7 +51,24 @@ let idx=0,target=0,busy=false,locked=false,hovering=false,timer=null;
 let seqTimer=null,seqCancelable=false,seqStage=0,seqHoldLen=0;
 let mouseX=null,sel=null,pending=null;
 
-function setBig(kind){for(const k in flagEl)flagEl[k].classList.toggle('fh-big',k===kind)}
+// Real (invisible) link over the scene, only active while a flag is hovered,
+// so the browser/theme gives it the normal hover/select cursor like any other link.
+const hit=document.createElement('a');
+hit.href='#';hit.tabIndex=-1;hit.className='fh-hit';hit.setAttribute('aria-hidden','true');
+hit.addEventListener('click',e=>e.preventDefault());
+scene.appendChild(hit);
+let mx=null,my=null;
+function setBig(kind){for(const k in flagEl)flagEl[k].classList.toggle('fh-big',k===kind);if(!kind)hit.classList.remove('on')}
+// Only the flag itself (not the whole scene) gets the link/select cursor
+function updateHit(z){
+  if(!z||mx===null){hit.classList.remove('on');return}
+  const r=flagEl[z].getBoundingClientRect(),sr=scene.getBoundingClientRect();
+  const over=mx>=r.left&&mx<=r.right&&my>=r.top&&my<=r.bottom;
+  if(!over){hit.classList.remove('on');return}
+  hit.style.left=(r.left-sr.left)/sr.width*100+'%';hit.style.top=(r.top-sr.top)/sr.height*100+'%';
+  hit.style.width=r.width/sr.width*100+'%';hit.style.height=r.height/sr.height*100+'%';
+  hit.classList.add('on');
+}
 
 function sideAt(){
   if(busy||idx!==HOLD||mouseX===null||!current||current.pose!=='hold'){sel=null;return null}
@@ -60,7 +77,7 @@ function sideAt(){
   else if(sel!==current.F&&sel!==current.R)sel=mouseX<24?current.F:current.R;
   return sel;
 }
-function refreshHover(){const z=sideAt();setBig(z);scene.style.cursor=z?'pointer':''}
+function refreshHover(){const z=sideAt();setBig(z);updateHit(z)}
 
 function tick(){
   if(busy)return;
@@ -134,12 +151,12 @@ function pick(z){
 }
 const ptX=e=>{const r=scene.getBoundingClientRect();return(e.clientX-r.left)/r.width*48};
 scene.addEventListener('mouseenter',e=>{
-  hovering=true;mouseX=ptX(e);
+  hovering=true;mouseX=ptX(e);mx=e.clientX;my=e.clientY;
   if(busy&&seqCancelable)return resume();
   if(!busy&&!locked)go(HOLD);
 });
-scene.addEventListener('mouseleave',()=>{hovering=false;locked=false;mouseX=null;sel=null;scene.style.cursor='';setBig(null);if(!busy)go(0)});
-scene.addEventListener('mousemove',e=>{mouseX=ptX(e);refreshHover()});
+scene.addEventListener('mouseleave',()=>{hovering=false;locked=false;mouseX=null;mx=my=null;sel=null;scene.style.cursor='';setBig(null);if(!busy)go(0)});
+scene.addEventListener('mousemove',e=>{mouseX=ptX(e);mx=e.clientX;my=e.clientY;refreshHover()});
 scene.addEventListener('click',e=>{
   mouseX=ptX(e);
   const z=sideAt();

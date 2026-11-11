@@ -131,7 +131,11 @@
     /* ---------- project overlay: stacked, scrolls as one piece ---------- */
     .project-overlay { padding: 16px; }
 
+    /* main.js sets an inline display:block on open, which breaks the
+       flex column that lets the content area scroll: force it back. */
     .project-detail {
+        display: flex !important;
+        flex-direction: column;
         height: calc(100vh - 32px);
         max-height: calc(100vh - 32px);
         padding: 20px;
@@ -148,15 +152,19 @@
         overscroll-behavior: contain;
         -webkit-overflow-scrolling: touch;
         padding: 0 10px 10px 0;
+        touch-action: pan-y;
     }
     .project-detail__visual { display: block; height: auto; min-height: 0; margin-bottom: 24px; }
     .project-detail__image {
-        height: clamp(240px, 46vw, 440px);
-        min-height: 0;
+        height: auto;
+        min-height: 160px;
         flex: none;
         border-width: 5px;
         box-shadow: 6px 6px 0 #1a1a1a;
     }
+    /* show the whole picture at its own proportions (no cropping);
+       the project window scrolls instead */
+    .project-detail__image img { height: auto; min-height: 0; object-fit: contain; }
     .project-gallery-arrow { width: 44px; height: 44px; border-width: 4px; font-size: 15px; }
     .project-gallery-arrow--prev { left: 10px; }
     .project-gallery-arrow--next { right: 10px; }
@@ -244,6 +252,7 @@
     nav ul li a::after { left: 7px; width: calc(100% - 14px); }
 
     .content h2 { font-size: min(15vw, 26vh); }
+    .scroll-hint { --size: 104px; left: 18px; bottom: 30px; }
     .next-section { padding: 120px 24px 60px; }
     .intro_text--container p { font-size: 22px; line-height: 1.55; margin-bottom: 20px; }
     .retro-font, .retro-font .word { font-size: 15px; }
@@ -263,7 +272,7 @@
     }
     .project-detail__top { padding-right: 46px; border-bottom-width: 4px; }
     .project-detail__close { top: 4px; right: 6px; width: 38px; height: 38px; font-size: 24px; }
-    .project-detail__image { height: 240px; }
+    .project-detail__image { height: auto; }
     .project-gallery-arrow { width: 40px; height: 40px; font-size: 14px; }
     .project-gallery-arrow--prev { left: 8px; }
     .project-gallery-arrow--next { right: 8px; }
@@ -333,7 +342,7 @@
     .next-section { padding-top: 90px; }
     .skills { padding: 70px 4vw 50px; }
     .cs { height: max(300px, calc(100vh - 120px)); min-height: 0; }
-    .project-detail__image { height: 180px; }
+    .project-detail__image { height: auto; }
 }
 
 

@@ -255,6 +255,23 @@ function setupMainAnimations() {
         ease: 'none'
     });
 
+    // "Scroll down" hint fades out as soon as the user starts scrolling
+    const hint = document.querySelector('.scroll-hint');
+
+    if (hint) {
+        gsap.to(hint, {
+            opacity: 0,
+            y: 24,
+            ease: 'none',
+            scrollTrigger: {
+                trigger: container,
+                start: 'top top',
+                end: '+=20%',
+                scrub: true
+            }
+        });
+    }
+
 }
 
 
@@ -1624,21 +1641,35 @@ function setupHorizontalScroll() {
     if (!container || !cardsContainer) return;
 
 
-    // How far the cards have to move so the LAST card ends up
-    // exactly in the middle of the screen (works for any card/screen size).
+    // How far the cards have to move so the LAST card ends perfectly:
+    //  - wide screens: the last card's right margin mirrors the first
+    //    card's left margin (same as the original desktop behaviour)
+    //  - narrow screens (about one card visible): the last card is centred
     function getDistance() {
 
-        const last = cardsContainer.lastElementChild;
+        const cardList = cardsContainer.children;
 
-        if (!last) return 0;
+        if (!cardList.length) return 0;
+
+        const first = cardList[0];
+        const last = cardList[cardList.length - 1];
 
         const currentX = gsap.getProperty(cardsContainer, 'x') || 0;
-        const rect = last.getBoundingClientRect();
 
-        // centre of the last card when the carousel is at x = 0
-        const centre = rect.left - currentX + rect.width / 2;
+        const firstRect = first.getBoundingClientRect();
+        const lastRect = last.getBoundingClientRect();
 
-        return Math.max(0, centre - window.innerWidth / 2);
+        // positions when the carousel is at x = 0
+        const startLeft = firstRect.left - currentX;
+        const lastRight = lastRect.right - currentX;
+
+        const viewport = window.innerWidth;
+
+        const targetRight = viewport / lastRect.width < 1.7
+            ? (viewport + lastRect.width) / 2
+            : viewport - startLeft;
+
+        return Math.max(0, lastRight - targetRight);
 
     }
 

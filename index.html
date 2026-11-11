@@ -60,10 +60,53 @@
             <h2 class="wave wave1">THIJS VERHOEVEN</h2>
             <h2 class="wave wave2">THIJS VERHOEVEN</h2>
         </div>
+
+        <!-- SCROLL HINT -->
+        <a class="scroll-hint" href="#intro" aria-label="Scroll down" data-i18n-attr="aria-label:hero.scrollLabel">
+            <div class="scroll-hint__inner">
+                
+
+<svg class="scroll-hint__ring" viewBox="0 0 120 120" aria-hidden="true">
+    <defs>
+        <path
+            id="hintCircle"
+            d="M60,60 m-46,0 a46,46 0 1,1 92,0 a46,46 0 1,1 -92,0"
+        />
+    </defs>
+
+    <text>
+        <textPath href="#hintCircle" startOffset="25%" text-anchor="middle" data-i18n="hero.scroll">SCROLL DOWN</textPath>
+    </text>
+    <text>
+        <textPath href="#hintCircle" startOffset="75%" text-anchor="middle" data-i18n="hero.scroll">SCROLL DOWN</textPath>
+    </text>
+    <text>
+        <textPath href="#hintCircle" startOffset="0%" text-anchor="middle">•</textPath>
+    </text>
+    <text>
+        <textPath href="#hintCircle" startOffset="50%" text-anchor="middle">•</textPath>
+    </text>
+</svg>
+
+
+                <span class="scroll-hint__disc">
+                    <svg class="scroll-hint__arrow" viewBox="0 0 60 60" aria-hidden="true">
+                        <!-- brush stem, thin at the top, heavier at the bottom -->
+                        <path d="M29.2,4 C33.5,15 26.5,29 29.6,48 C31.6,41 33.4,30 31.8,19 C31.1,13 30.3,8 29.2,4 Z"/>
+                        <!-- left stroke of the head, with a small flick -->
+                        <path d="M29.8,52 C26,45.5 20.5,40 13.2,36.2 C12.6,35.9 12.9,35.2 13.6,35.3 C21.8,36.8 28,41.5 31.6,48.6 Z"/>
+                        <!-- right stroke of the head, longer sweep -->
+                        <path d="M29.8,52 C34,45 40.5,39.5 48.2,34 C48.8,33.6 48.5,33 47.8,33.1 C39,34.6 32.5,39.8 28.4,47.8 Z"/>
+                        <!-- little sparkle, like the logo -->
+                        <path class="scroll-hint__spark" d="M47,9 L48.1,14 L53,15.1 L48.1,16.2 L47,21.2 L45.9,16.2 L41,15.1 L45.9,14 Z"/>
+                    </svg>
+                </span>
+            </div>
+        </a>
     </div>
 
     <!-- INTRO -->
-    <div class="next-section">
+    <div class="next-section" id="intro">
         <div class="intro_text--container">
             <section>
                 <p class="reveal-type">

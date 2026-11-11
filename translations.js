@@ -3,6 +3,8 @@ const translations = {
         "nav.projects": "Projects",
         "nav.about": "About Me",
         "nav.contact": "Contact",
+        "hero.scroll": "SCROLL DOWN • SCROLL DOWN •",
+        "hero.scrollLabel": "Scroll down",
 
         "intro.paragraph1.before": "I'm an IT & Business graduate who loves",
         "intro.paragraph1.highlight": "solving problems",
@@ -26,7 +28,7 @@ const translations = {
                 title: "AI-Powered Order Processing",
                 type: "WORK PROJECT",
                 status: "COMPLETED",
-                description: "Developed and implemented an end-to-end order processing solution that transforms a previously manual workflow into an automated process, extracting order data from PDF, XML and Excel documents, structuring it for downstream processing, and enabling fully automated execution through a zero-click mode. The solution demonstrated the potential to automate approximately 37% of manually processed orders, equivalent to an estimated 350 orders per month, significantly reducing manual data entry and streamlining order processing.",
+                description: "Developed & implemented an order processing solution that transforms a previously manual workflow into an automated process, extracting order data from PDF, XML and Excel documents, structuring it for AI-processing, and enabling fully automated execution through a zero-click mode. The solution automated approximately 37% of manually processed orders, ~ 350 orders per month, significantly reducing manual data entry and streamlining order processing.",
                 imageLabels: [
                     "SKETCH // AUTOMATION PROTOTYPE",
                     "SCREENSHOT // AUTOMATION FLOW"
@@ -200,6 +202,8 @@ const translations = {
         "nav.projects": "Projecten",
         "nav.about": "Over mij",
         "nav.contact": "Contact",
+        "hero.scroll": "SCROLL OMLAAG • SCROLL OMLAAG •",
+        "hero.scrollLabel": "Scroll omlaag",
 
         "intro.paragraph1.before": "Ik ben afgestudeerd in IT & Business en hou ervan om",
         "intro.paragraph1.highlight": "problemen op te lossen",
